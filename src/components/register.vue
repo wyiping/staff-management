@@ -76,17 +76,16 @@ export default {
   },
   methods: {
     register() {
-	  var data = {};
-	  data.adress = this.adress
-	  data.age = this.age
+      var data = {};
+      data.adress = this.adress
+      data.age = this.age
       data.department = this.department;
-	  data.email = this.email
-	  data.introduce = this.introduce
+      data.email = this.email
+      data.introduce = this.introduce
       data.name = this.name;
       data.password = this.password;
-	  data.phone = this.phone
-	  data.sex = this.sex
-      console.log(data);
+      data.phone = this.phone
+      data.sex = this.sex
       this.axios.post("/api/register", data).then(function(response) {
         console.log(response);
       });

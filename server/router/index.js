@@ -12,8 +12,11 @@ router.post('/login', bodyParser.json(), (req, res) => {
             if (count > 0) {
                 db.User.findOne({ name: req.body.name }, (err, data) => {
                     if (req.body.password == data.password) {
-                        res.cookie('user', data)
-                        res.json({ code: 1, msg: '登录成功' })
+                        let user = {}
+                        user.id = data.id
+                        user.name = data.name
+                        user.isAdmin = data.isAdmin
+                        res.json({ code: 1, msg: '登录成功' ,user})
                     } else {
                         res.json({ code: 0, msg: '密码错误,请重新输入' })
                     }

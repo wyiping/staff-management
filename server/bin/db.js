@@ -23,7 +23,7 @@ var UserSchema = new Schema({
     password: String,
 	detail:{
 		age: Number,
-		adress: String,
+		address: String,
 		email: String,
 		introduce: String,
 		phone: String,

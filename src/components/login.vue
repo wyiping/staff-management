@@ -31,11 +31,15 @@ export default {
   },
   methods: {
     login() {
+      const self = this;
       var data = {};
-      data.name = this.name;
-      data.password = this.password;
-      this.axios.post("/api/login", data).then(function(response) {
-        console.log(response);
+      data.name = self.name;
+      data.password = self.password;
+      self.axios.post("/api/login", data).then(function(response) {
+        if(response.data.code == 1){
+          sessionStorage.setItem("user", JSON.stringify(response.data.user))
+          self.$router.push('/admin')
+        }
       });
     }
   }
