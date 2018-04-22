@@ -78,7 +78,7 @@ export default {
                 department: '',
                 detail:{
                     age: '',
-                    adress: '',
+                    address: '',
                     email: '',
                     introduce: '',
                     phone: '',

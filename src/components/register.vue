@@ -9,11 +9,11 @@
 			<fieldset>
 				<legend><span class="number">1</span>基本信息</legend>
 				<label for="name">姓名:</label>
-				<input type="text" id="name" name="name" v-model="name">
+				<input type="text" id="name" name="name" v-model="user.name">
 				<label for="password">密码:</label>
-				<input type="password" id="password" name="password" v-model="password"><br>
+				<input type="password" id="password" name="password" v-model="user.password"><br>
 				<label for="department">部门:</label>
-				<select id="department" name="department" v-model="department">
+				<select id="department" name="department" v-model="user.department">
 					<optgroup label="Web">
 						<option value="frontend_developer">Front-End Developer</option>
 						<option value="php_developor">PHP Developer</option>
@@ -41,18 +41,18 @@
 			<fieldset>
 				<legend><span class="number">2</span>个人简历</legend>
 				<label for="age">年龄:</label>
-				<input type="number" name="age" id="age" v-model="age">
-				<label for="adress">地址:</label>
-				<input type="text" id="adress" name="adress" v-model="adress"><br>
+				<input type="number" name="age" id="age" v-model="user.detail.age">
+				<label for="address">地址:</label>
+				<input type="text" id="address" name="address" v-model="user.detail.address"><br>
 				<label for="phone">手机:</label>
-				<input type="text" id="phone" name="phone" v-model="phone">
+				<input type="text" id="phone" name="phone" v-model="user.detail.phone">
 				<label for="mail">Email:</label>
-				<input type="email" id="mail" name="email" v-model="email"><br>
+				<input type="email" id="mail" name="email" v-model="user.detail.email"><br>
 				<label>性别:</label>
-				<input type="radio" id="male" value="男" name="sex" v-model="sex"><label for="male" class="light">男</label>
-				<input type="radio" id="female" value="女" name="sex" v-model="sex"><label for="female" class="light">女</label><br>
+				<input type="radio" id="male" value="男" name="sex" v-model="user.detail.sex"><label for="male" class="light">男</label>
+				<input type="radio" id="female" value="女" name="sex" v-model="user.detail.sex"><label for="female" class="light">女</label><br>
 				<label for="introduce">简介:</label><br>
-				<textarea id="introduce" rows="5" name="introduce" v-model="introduce"></textarea>
+				<textarea id="introduce" rows="5" name="introduce" v-model="user.detail.introduce"></textarea>
 			</fieldset>
 			<button  type="submit">注册</button>
 		</form>
@@ -63,31 +63,28 @@ export default {
   name: "register",
   data: function() {
     return {
-      adress: "",
-      age: "",
-      department: "",
-      email: "",
-      introduce: "",
-      name: "",
-      password: "",
-      phone: "",
-      sex: ""
+       user:{
+          workId: '',
+          name: '',
+          department: '',
+          detail:{
+              age: '',
+              address: '',
+              email: '',
+              introduce: '',
+              phone: '',
+              sex: ''
+          }
+       }
     };
   },
   methods: {
     register() {
-      var data = {};
-      data.adress = this.adress
-      data.age = this.age
-      data.department = this.department;
-      data.email = this.email
-      data.introduce = this.introduce
-      data.name = this.name;
-      data.password = this.password;
-      data.phone = this.phone
-      data.sex = this.sex
-      this.axios.post("/api/register", data).then(function(response) {
-        console.log(response);
+      var self = this
+      self.axios.post("/api/register", self.user).then(function(response) {
+        if(response.data.code == 1){
+          self.$router.push('/login');
+        }
       });
     }
   }

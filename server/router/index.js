@@ -29,15 +29,7 @@ router.post('/login', bodyParser.json(), (req, res) => {
 })
 
 router.post('/register', bodyParser.json(), (req, res) => {
-    var detail = {}
     req.body.isAdmin = false
-    detail.age = req.body.age
-    detail.address = req.body.address
-    detail.email = req.body.email
-    detail.introduce = req.body.introduce
-    detail.phone = req.body.phone
-    detail.sex = req.body.sex
-    req.body.detail = detail
     new db.User(req.body).save(err => {
         if (err) {
             if (err.code == 11000) {

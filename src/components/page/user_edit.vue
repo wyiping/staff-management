@@ -46,7 +46,7 @@
                                         </tr>
                                         <tr>
                                             <th>住址</th>
-                                            <td colspan="3"><input type="text" id="adress" name="adress" v-model="user.detail.address"></td>
+                                            <td colspan="3"><input type="text" id="address" name="address" v-model="user.detail.address"></td>
                                         </tr>
                                         <tr>
                                             <th>个人简介</th>
