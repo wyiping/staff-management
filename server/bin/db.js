@@ -1,6 +1,7 @@
 //导入mongoose模块
 const mongoose = require('mongoose')
-
+// 自动增长模块
+const AutoIncrement = require('mongoose-sequence')(mongoose)
 //设置数据库连接地址
 mongoose.connect('mongodb://localhost:27017/staff_management')
 
@@ -16,20 +17,21 @@ var Schema = mongoose.Schema;
 
 // 用户
 var UserSchema = new Schema({
-    workId: String,
+	workId: Number,
 	name: String,
 	isAdmin: Boolean,
-    department: String,
-    password: String,
-	detail:{
+	department: String,
+	password: String,
+	detail: {
 		age: Number,
 		address: String,
 		email: String,
 		introduce: String,
 		phone: String,
 		sex: String
-    }
+	}
 });
+UserSchema.plugin(AutoIncrement, {inc_field: 'workId'})
 var User = mongoose.model('user', UserSchema);
 
 // 导出模块

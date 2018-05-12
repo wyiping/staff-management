@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper skin-blue">
+    <div class="wrapper skin-green-light">
         <v-head></v-head>
         <v-sidebar></v-sidebar>
         <div class="content-wrapper">
@@ -18,7 +18,7 @@
 <script>
 import "@/assets/css/bootstrap.css";
 import "@/assets/css/AdminLTE.css";
-import "@/assets/css/all-skins.css";
+import "@/assets/css/skin-green-light.css";
 import "@/assets/css/font-awesome.css";
 import "@/assets/js/jquery.js";
 import "@/assets/js/bootstrap.js";

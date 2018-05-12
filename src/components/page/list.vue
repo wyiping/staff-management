@@ -48,13 +48,13 @@
                             <table class="table table-bordered">
                                 <tbody>
                                     <tr>
-                                        <th style="width: 100px">工牌号</th>
+                                        <th style="width: 59px">工牌号</th>
                                         <th>姓名</th>
                                         <th>部门</th>
                                         <th>联系方式</th>
                                     </tr>
                                     <tr v-for="user in users">
-                                        <td>{{user._id}}</td>
+                                        <td style="text-align:center;">{{user.workId}}</td>
                                         <td>{{user.name}}</td>
                                         <td>{{user.department}} </td>
                                         <td>{{user.detail.phone}}</td>

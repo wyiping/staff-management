@@ -33,7 +33,7 @@
                                             <th>姓名</th>
                                             <td>{{user.name}}</td>
                                             <th>工牌号</th>
-                                            <td>{{$route.params.id}}</td>
+                                            <td>{{user.workId}}</td>
                                         </tr>
                                         <tr>
                                             <th>年龄</th>
