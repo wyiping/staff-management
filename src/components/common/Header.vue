@@ -24,7 +24,7 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-right">
-                                <a href="#" class="btn btn-default btn-flat">注销</a>
+                                <a href="#" class="btn btn-default btn-flat" v-on:click="logout">注销</a>
                                 </div>
                             </li>
                         </ul>
@@ -39,6 +39,12 @@ export default {
     data:function (){
         return {
             name:''
+        }
+    },
+    methods:{
+        logout(){
+            sessionStorage.removeItem("user")
+            this.$router.push("/login");
         }
     },
     mounted() {

@@ -18,13 +18,23 @@ export default new Router({
 			component: resolve => require(['../components/register'], resolve)
 		},
 		{
-			path:'/admin',
-			component:home,
+			path:'/user',
+			component:resolve => require(['../components/common/Home'], resolve),
 			children:[
 				{path:'',component: resolve => require(['../components/page/index'], resolve)},
 				{path:'detail/:id',component: resolve => require(['../components/page/detail'], resolve)},
 				{path:'user_edit',component: resolve => require(['../components/page/user_edit'], resolve)},
-				{path:'list',component:resolve => require(['../components/page/list'], resolve)}
+				{path:'list',component:resolve => require(['../components/page/list_user'], resolve)}
+			]
+		},
+		{
+			path:'/admin',
+			component:resolve => require(['../components/common/Home'], resolve),
+			children:[
+				{path:'',component: resolve => require(['../components/page/index'], resolve)},
+				{path:'detail/:id',component: resolve => require(['../components/page/detail'], resolve)},
+				{path:'user_edit',component: resolve => require(['../components/page/user_edit'], resolve)},
+				{path:'list',component:resolve => require(['../components/page/list_admin'], resolve)}
 			]
 		}
 	]

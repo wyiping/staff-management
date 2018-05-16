@@ -38,7 +38,12 @@ export default {
       self.axios.post("/api/login", data).then(function(response) {
         if(response.data.code == 1){
           sessionStorage.setItem("user", JSON.stringify(response.data.user))
-          self.$router.push('/admin')
+          if(response.data.user.isAdmin){
+            self.$router.push('/admin')
+          }else{
+            self.$router.push('/user')
+          }
+          
         }
       });
     }
