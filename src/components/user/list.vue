@@ -57,7 +57,7 @@
                                         <td style="text-align:center;">{{user.workId}}</td>
                                         <td>{{user.name}}</td>
                                         <td>{{user.department}} </td>
-                                        <td>{{user.detail.phone}}</td>
+                                        <td>{{user.phone}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -84,14 +84,15 @@ export default {
   },
   mounted() {
     const self = this;
-    self.axios.post("/api/list").then(res => {
+    self.axios.post("/api/user/list").then(res => {
       self.users = res.data.users;
+      console.log(res.data.users)
     });
   },
   methods: {
     getSearch() {
       const self = this;
-      self.axios.post("/api/list",
+      self.axios.post("/api/user/list",
         {
             workId:self.workId,
             name:self.name,

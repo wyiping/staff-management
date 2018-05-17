@@ -22,12 +22,12 @@ var UserSchema = new Schema({
 	isAdmin: Boolean,
 	department: String,
 	password: String,
+	phone: String,
 	detail: {
 		age: Number,
 		address: String,
 		email: String,
 		introduce: String,
-		phone: String,
 		sex: String
 	}
 });

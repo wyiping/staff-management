@@ -21,20 +21,20 @@ export default new Router({
 			path:'/user',
 			component:resolve => require(['../components/common/Home'], resolve),
 			children:[
-				{path:'',component: resolve => require(['../components/page/index'], resolve)},
-				{path:'detail/:id',component: resolve => require(['../components/page/detail'], resolve)},
-				{path:'user_edit',component: resolve => require(['../components/page/user_edit'], resolve)},
-				{path:'list',component:resolve => require(['../components/page/list_user'], resolve)}
+				{path:'',component: resolve => require(['../components/common/index'], resolve)},
+				{path:'detail/:id',component: resolve => require(['../components/user/detail'], resolve)},
+				{path:'user_edit',component: resolve => require(['../components/user/edit'], resolve)},
+				{path:'list',component:resolve => require(['../components/user/list'], resolve)}
 			]
 		},
 		{
 			path:'/admin',
 			component:resolve => require(['../components/common/Home'], resolve),
 			children:[
-				{path:'',component: resolve => require(['../components/page/index'], resolve)},
-				{path:'detail/:id',component: resolve => require(['../components/page/detail'], resolve)},
-				{path:'user_edit',component: resolve => require(['../components/page/user_edit'], resolve)},
-				{path:'list',component:resolve => require(['../components/page/list_admin'], resolve)}
+				{path:'',component: resolve => require(['../components/common/index'], resolve)},
+				{path:'detail/:id',component: resolve => require(['../components/admin/detail'], resolve)},
+				{path:'edit/:id',component: resolve => require(['../components/admin/edit'], resolve)},
+				{path:'list',component:resolve => require(['../components/admin/list'], resolve)}
 			]
 		}
 	]

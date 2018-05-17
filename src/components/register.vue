@@ -45,7 +45,7 @@
 				<label for="address">地址:</label>
 				<input type="text" id="address" name="address" v-model="user.detail.address"><br>
 				<label for="phone">手机:</label>
-				<input type="text" id="phone" name="phone" v-model="user.detail.phone">
+				<input type="text" id="phone" name="phone" v-model="user.phone">
 				<label for="mail">Email:</label>
 				<input type="email" id="mail" name="email" v-model="user.detail.email"><br>
 				<label>性别:</label>
@@ -67,12 +67,12 @@ export default {
           workId: '',
           name: '',
           department: '',
+          phone: '',
           detail:{
               age: '',
               address: '',
               email: '',
               introduce: '',
-              phone: '',
               sex: ''
           }
        }

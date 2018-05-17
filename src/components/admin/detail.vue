@@ -20,9 +20,9 @@
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border text-center">
-                            <h3 class="box-title">我的简历</h3>
+                            <h3 class="box-title">{{user.name}}的简历</h3>
                             <div class="box-tools pull-right">
-                                <router-link to="/admin/user_edit" class="btn btn-info" title="修改"><i class="fa fa-edit"></i></router-link>
+                                <router-link :to="'/admin/edit/'+user._id" class="btn btn-info" title="修改"><i class="fa fa-edit"></i></router-link>
                             </div>
                         </div>
                         <div class="box-body no-padding">
@@ -45,7 +45,7 @@
                                             <th>邮箱</th>
                                             <td>{{user.detail.email}}</td>
                                             <th>手机号</th>
-                                            <td>{{user.detail.phone}}</td>
+                                            <td>{{user.phone}}</td>
                                         </tr>
                                         <tr>
                                             <th>住址</th>
@@ -76,12 +76,12 @@ export default {
                 workId: '',
                 name: '',
                 department: '',
+                phone: '',
                 detail:{
                     age: '',
                     address: '',
                     email: '',
                     introduce: '',
-                    phone: '',
                     sex: ''
                 }
             }
@@ -89,7 +89,7 @@ export default {
     },
     mounted(){
         const self = this;
-        self.axios.post('/api/detail/'+self.$route.params.id).then(res=>{
+        self.axios.post('/api/user/detail/'+self.$route.params.id).then(res=>{
             self.user = res.data.user;
         })
     }

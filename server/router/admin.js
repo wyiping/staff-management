@@ -54,7 +54,6 @@ router.post('/list', bodyParser.json(), (req, res) => {
                     delete m._id
                     delete m.isAdmin
                     delete m.password
-                    delete m.detail
                     return m
                 })
             })
@@ -62,22 +61,4 @@ router.post('/list', bodyParser.json(), (req, res) => {
     })
 })
 
-// 查询个人信息
-router.post('/detail/:id', bodyParser.json(), (req, res) => {
-    db.User.findById(req.params.id, (err, data) => {
-        res.json({ user: data })
-    })
-})
-
-// 修改个人信息
-router.post('/edit/:id', bodyParser.json(), (req, res) => {
-    db.User.findByIdAndUpdate(req.params.id, req.body, err => {
-        if (err) {
-            res.json({ code: 0, msg: '系统错误' });
-        }
-        else {
-            res.json({ code: 1, msg: '更新成功！' });
-        }
-    })
-})
 module.exports = router

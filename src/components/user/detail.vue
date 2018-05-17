@@ -3,14 +3,14 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                修改资料
+                个人简历
                 <small>Control panel</small>
             </h1>
             <ol class="breadcrumb">
                 <li>
                     <a href="#"><i class="fa fa-dashboard"></i> 首页</a>
                 </li>
-                <li class="active">修改资料</li>
+                <li class="active">个人简历</li>
             </ol>
         </section>
 
@@ -20,7 +20,10 @@
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border text-center">
-                            <h3 class="box-title">修改资料</h3>
+                            <h3 class="box-title">我的简历</h3>
+                            <div class="box-tools pull-right">
+                                <router-link to="/admin/user_edit" class="btn btn-info" title="修改"><i class="fa fa-edit"></i></router-link>
+                            </div>
                         </div>
                         <div class="box-body no-padding">
                             <div class="col-md-6 col-md-push-3 text-center">
@@ -30,31 +33,30 @@
                                             <th>姓名</th>
                                             <td>{{user.name}}</td>
                                             <th>工牌号</th>
-                                            <td>{{user._id}}</td>
+                                            <td>{{user.workId}}</td>
                                         </tr>
                                         <tr>
                                             <th>年龄</th>
-                                            <td><input type="number" name="age" v-model="user.detail.age"></td>
+                                            <td>{{user.detail.age}}</td>
                                             <th>部门</th>
                                             <td>{{user.department}}</td>
                                         </tr>
                                         <tr>
                                             <th>邮箱</th>
-                                            <td><input type="email" name="email" v-model="user.detail.email"></td>
+                                            <td>{{user.detail.email}}</td>
                                             <th>手机号</th>
-                                            <td><input type="text" name="phone" v-model="user.detail.phone"></td>
+                                            <td>{{user.phone}}</td>
                                         </tr>
                                         <tr>
                                             <th>住址</th>
-                                            <td colspan="3"><input type="text" id="address" name="address" v-model="user.detail.address"></td>
+                                            <td colspan="3">{{user.detail.address}}</td>
                                         </tr>
                                         <tr>
                                             <th>个人简介</th>
-                                            <td colspan="3"><textarea id="introduce" rows="3" name="introduce" v-model="user.detail.introduce"></textarea></td>
+                                            <td colspan="3">{{user.detail.introduce}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
-                                <button v-on:click="edit" class="btn btn-info">修改</button><router-link :to="'/admin/detail/' + user._id" ><button class="btn btn-info">返回</button></router-link>
                             </div>
                         </div>
                     <!-- /.box-body -->
@@ -67,18 +69,19 @@
 </template>
 <script>
 export default {
+    name:'detail',
     data: function(){
         return {
             user:{
                 workId: '',
                 name: '',
                 department: '',
+                phone: '',
                 detail:{
                     age: '',
                     address: '',
                     email: '',
                     introduce: '',
-                    phone: '',
                     sex: ''
                 }
             }
@@ -86,18 +89,16 @@ export default {
     },
     mounted(){
         const self = this;
-        self.axios.post('/api/detail/'+JSON.parse(sessionStorage.getItem("user")).id).then(res=>{
+        self.axios.post('/api/user/detail/'+self.$route.params.id).then(res=>{
             self.user = res.data.user;
         })
-    },
-    methods:{
-        edit:function(){
-            const self = this;
-            this.axios.post("/api/edit/"+self.user._id, self.user).then(function(response) {
-                console.log(response);
-                location.reload()
-            });
-        }
     }
 }
 </script>
+<style scoped>
+th{
+    text-align: center;
+    width: 20%;
+}
+[v-cloak] {display: none;}
+</style>
