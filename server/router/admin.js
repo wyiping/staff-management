@@ -31,10 +31,15 @@ router.post('/list', bodyParser.json(), (req, res) => {
             filter.workId = workId
         }
     }
+    if (req.body.department) {
+        var department = req.body.department.trim()
+        if (department.length > 0) {
+            filter.department = department
+        }
+    }
     if (req.body.phone) {
         var phone = req.body.phone.trim()
         if (phone.length > 0) {
-            filter.phone = {}
             filter.phone = { '$regex': `.*${phone}.*?` }
         }
     }
@@ -44,13 +49,14 @@ router.post('/list', bodyParser.json(), (req, res) => {
         var pageCount = Math.ceil(total / pageSize);
         page = page > pageCount ? pageCount : page
         page = page < 1 ? 1 : page;
-        db.User.find(filter).skip((page - 1) * pageSize).limit(pageSize).exec((err, data) => {
+        db.User.find(filter).skip((page - 1) * pageSize).limit(pageSize).populate("department","name").exec((err, data) => {
             res.json({
                 page, pageCount, pages: getPages(page, pageCount),
                 users: data.map(m => {
                     m = m.toObject()
                     m.id = m._id
                     m.phone = m.phone
+                    m.department = m.department.name
                     delete m._id
                     delete m.isAdmin
                     delete m.password
@@ -61,4 +67,37 @@ router.post('/list', bodyParser.json(), (req, res) => {
     })
 })
 
+// 查询部门
+router.post('/department/list', bodyParser.json(), (req, res) => {
+    var pageSize = 10;
+    var page = 1;
+    db.Department.find().count((err, total) => {
+        var pageCount = Math.ceil(total / pageSize);
+        page = page > pageCount ? pageCount : page
+        page = page < 1 ? 1 : page;
+        db.Department.find().skip((page - 1) * pageSize).limit(pageSize).exec((err, data) => {
+            res.json({
+                page, pageCount, pages: getPages(page, pageCount),
+                departments:data
+            })
+        })
+    })
+})
+
+// 添加部门
+router.post('/department/add', bodyParser.json(), (req, res) => {
+    new db.Department(req.body).save(err => {
+        if (err) {
+            if (err.code == 11000) {
+                res.json({ code: 0, msg: '添加失败，该部门已存在！' })
+            } else {
+                res.json({ code: 0, msg: '添加失败,系统出错！' })
+            }
+        } else {
+            res.json({ code: 1, msg: '添加成功！' })
+        }
+    })
+})
+
+// 删除部门
 module.exports = router

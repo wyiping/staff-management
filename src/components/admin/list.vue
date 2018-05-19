@@ -45,8 +45,11 @@
             </div>
           </div>
           <div class="box">
-            <div class="box-body no-padding">
-              <table class="table table-bordered">
+            <div class="box-body table-responsive no-padding">
+              <div v-if="users.length == 0">
+                <h3 style="text-align:center;">没有查询结果</h3>
+              </div>
+              <table class="table table-bordered" v-else>
                 <tbody>
                   <tr>
                     <th style="width: 59px">工牌号</th>
@@ -84,6 +87,7 @@ export default {
   name: "login",
   data: function() {
     return {
+      department:'',
       workId: "",
       name: "",
       phone: "",
@@ -93,18 +97,20 @@ export default {
   },
   mounted() {
     const self = this;
-    self.axios.post("/api/admin/list").then(res => {
-      self.users = res.data.users;
-    });
+    if(self.$route.params.department){
+      self.department = self.$route.params.department
+    }
+    self.getSearch();
   },
   methods: {
     getSearch() {
       const self = this;
       self.axios
-        .post("/api/user/list", {
+        .post("/api/admin/list", {
           workId: self.workId,
           name: self.name,
-          phone: self.phone
+          phone: self.phone,
+          department:self.department
         })
         .then(function(response) {
           self.users = response.data.users;

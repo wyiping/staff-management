@@ -24,7 +24,7 @@ export default new Router({
 				{path:'',component: resolve => require(['../components/common/index'], resolve)},
 				{path:'detail/:id',component: resolve => require(['../components/user/detail'], resolve)},
 				{path:'edit',component: resolve => require(['../components/user/edit'], resolve)},
-				{path:'list',component:resolve => require(['../components/user/list'], resolve)}
+				{path:'users',component:resolve => require(['../components/user/list'], resolve)}
 			]
 		},
 		{
@@ -34,7 +34,8 @@ export default new Router({
 				{path:'',component: resolve => require(['../components/common/index'], resolve)},
 				{path:'detail/:id',component: resolve => require(['../components/admin/detail'], resolve)},
 				{path:'edit/:id',component: resolve => require(['../components/admin/edit'], resolve)},
-				{path:'list',component:resolve => require(['../components/admin/list'], resolve)}
+				{name:'users',path:'users',component:resolve => require(['../components/admin/list'], resolve)},
+				{path:'departments',component:resolve => require(['../components/admin/department'], resolve)}
 			]
 		}
 	]

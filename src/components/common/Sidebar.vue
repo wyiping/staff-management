@@ -26,13 +26,23 @@
             </router-link>
           </li>
           <li>
-            <router-link to="/admin/list">
+            <router-link to="/admin/users">
               <i class="fa fa-search text-aqua"></i>
               <span>员工列表</span>
             </router-link>
           </li>
-          <li><router-link to="/admin/management"><i class="fa fa-id-badge text-aqua"></i>信息审核</router-link></li>
-          <li><router-link to="/admin/management"><i class="fa fa-building text-aqua"></i>部门管理</router-link></li>
+          <li>
+            <router-link to="/admin/management">
+              <i class="fa fa-id-badge text-aqua"></i>
+              <span>信息审核</span>
+            </router-link>
+          </li>
+          <li>
+            <router-link to="/admin/departments">
+              <i class="fa fa-building text-aqua"></i>
+              <span>部门管理</span>
+            </router-link>
+          </li>
         </ul>
       </div>
       <div v-else>
@@ -45,7 +55,7 @@
             </router-link>
           </li>
           <li>
-            <router-link to="/user/list">
+            <router-link to="/user/users">
               <i class="fa fa-search text-aqua"></i>
               <span>员工列表</span>
             </router-link>
@@ -71,5 +81,4 @@ export default {
 };
 </script>
 <style scoped>
-
 </style>

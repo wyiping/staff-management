@@ -36,7 +36,7 @@
                       <th>年龄</th>
                       <td><input type="number" name="age" v-model="user.detail.age"></td>
                       <th>部门</th>
-                      <td>{{user.department}}</td>
+                      <td>{{user.department.name}}</td>
                     </tr>
                     <tr>
                       <th>邮箱</th>

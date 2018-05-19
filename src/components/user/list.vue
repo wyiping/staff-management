@@ -44,7 +44,7 @@
                         </div>
                     </div>
                     <div class="box">
-                        <div class="box-body no-padding">
+                        <div class="box-body table-responsive no-padding">
                             <table class="table table-bordered">
                                 <tbody>
                                     <tr>

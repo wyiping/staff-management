@@ -20,7 +20,7 @@ var UserSchema = new Schema({
 	workId: Number,
 	name: String,
 	isAdmin: Boolean,
-	department: String,
+	department: { type: Schema.Types.ObjectId, ref: "department" },
 	password: String,
 	phone: String,
 	detail: {
@@ -31,8 +31,15 @@ var UserSchema = new Schema({
 		sex: String
 	}
 });
-UserSchema.plugin(AutoIncrement, {inc_field: 'workId'})
+UserSchema.plugin(AutoIncrement, { inc_field: 'workId' })
 var User = mongoose.model('user', UserSchema);
 
+// 部门
+var DepartmentSchema = new Schema({
+	id: Number,
+	name: { type: String, unique: true }
+})
+DepartmentSchema.plugin(AutoIncrement, { inc_field: 'id' })
+var Department = mongoose.model('department', DepartmentSchema)
 // 导出模块
-module.exports = { User };
+module.exports = { User, Department };

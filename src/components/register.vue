@@ -14,27 +14,7 @@
 				<input type="password" id="password" name="password" v-model="user.password"><br>
 				<label for="department">部门:</label>
 				<select id="department" name="department" v-model="user.department">
-					<optgroup label="Web">
-						<option value="frontend_developer">Front-End Developer</option>
-						<option value="php_developor">PHP Developer</option>
-						<option value="python_developer">Python Developer</option>
-						<option value="rails_developer"> Rails Developer</option>
-						<option value="web_designer">Web Designer</option>
-						<option value="WordPress_developer">WordPress Developer</option>
-					</optgroup>
-					<optgroup label="Mobile">
-						<option value="Android_developer">Androild Developer</option>
-						<option value="iOS_developer">iOS Developer</option>
-						<option value="mobile_designer">Mobile Designer</option>
-					</optgroup>
-					<optgroup label="Business">
-						<option value="business_owner">Business Owner</option>
-						<option value="freelancer">Freelancer</option>
-					</optgroup>
-					<optgroup label="Other">
-						<option value="secretary">Secretary</option>
-						<option value="maintenance">Maintenance</option>
-					</optgroup>
+						<option v-for="d in departments" :value="d._id">{{d.name}}</option>
 				</select>
 				</fieldset>
 
@@ -75,10 +55,19 @@ export default {
               introduce: '',
               sex: ''
           }
-       }
+       },
+       departments:[]
     };
   },
+  mounted(){
+    this.getDepartments()
+  },
   methods: {
+    getDepartments() {
+      this.axios.post("/api/admin/department/list").then(res => {
+        this.departments = res.data.departments;
+      });
+    },
     register() {
       var self = this
       self.axios.post("/api/register", self.user).then(function(response) {

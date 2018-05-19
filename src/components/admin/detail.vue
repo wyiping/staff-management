@@ -39,7 +39,7 @@
                                             <th>年龄</th>
                                             <td>{{user.detail.age}}</td>
                                             <th>部门</th>
-                                            <td>{{user.department}}</td>
+                                            <td>{{user.department.name}}</td>
                                         </tr>
                                         <tr>
                                             <th>邮箱</th>

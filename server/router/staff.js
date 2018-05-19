@@ -44,13 +44,14 @@ router.post('/list', bodyParser.json(), (req, res) => {
         var pageCount = Math.ceil(total / pageSize);
         page = page > pageCount ? pageCount : page
         page = page < 1 ? 1 : page;
-        db.User.find(filter).skip((page - 1) * pageSize).limit(pageSize).exec((err, data) => {
+        db.User.find(filter).skip((page - 1) * pageSize).limit(pageSize).populate("department","name").exec((err, data) => {
             res.json({
                 page, pageCount, pages: getPages(page, pageCount),
                 users: data.map(m => {
                     m = m.toObject()
                     m.id = m._id
                     m.phone = m.phone
+                    m.department = m.department.name
                     delete m._id
                     delete m.isAdmin
                     delete m.password
@@ -64,7 +65,7 @@ router.post('/list', bodyParser.json(), (req, res) => {
 
 // 查询个人信息
 router.post('/detail/:id', bodyParser.json(), (req, res) => {
-    db.User.findById(req.params.id, (err, data) => {
+    db.User.findById(req.params.id).populate("department","name").exec((err, data) => {
         res.json({ user: data })
     })
 })
