@@ -22,7 +22,7 @@
                         <div class="box-header with-border text-center">
                             <h3 class="box-title">我的简历</h3>
                             <div class="box-tools pull-right">
-                                <router-link to="/admin/user_edit" class="btn btn-info" title="修改"><i class="fa fa-edit"></i></router-link>
+                                <router-link to="/user/edit" class="btn btn-info" title="修改"><i class="fa fa-edit"></i></router-link>
                             </div>
                         </div>
                         <div class="box-body no-padding">

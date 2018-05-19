@@ -86,7 +86,6 @@ export default {
     const self = this;
     self.axios.post("/api/user/list").then(res => {
       self.users = res.data.users;
-      console.log(res.data.users)
     });
   },
   methods: {

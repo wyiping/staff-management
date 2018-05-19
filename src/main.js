@@ -4,7 +4,8 @@ import Vue from 'vue'
 import index from './index'
 import router from './router'
 import axios from 'axios'
-
+import Toasted from 'vue-toasted';
+Vue.use(Toasted)
 Vue.config.productionTip = false
 Vue.prototype.axios= axios
 /* eslint-disable no-new */

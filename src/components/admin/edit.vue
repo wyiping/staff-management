@@ -70,36 +70,43 @@
 </template>
 <script>
 export default {
-    data: function(){
-        return {
-            user:{
-                workId: '',
-                name: '',
-                department: '',
-                phone: '',
-                detail:{
-                    age: '',
-                    address: '',
-                    email: '',
-                    introduce: '',
-                    sex: ''
-                }
-            }
+  data: function() {
+    return {
+      user: {
+        workId: "",
+        name: "",
+        department: "",
+        phone: "",
+        detail: {
+          age: "",
+          address: "",
+          email: "",
+          introduce: "",
+          sex: ""
         }
-    },
-    mounted(){
-        const self = this;
-        self.axios.post('/api/user/detail/'+self.$route.params.id).then(res=>{
-            self.user = res.data.user;
-        })
-    },
-    methods:{
-        edit:function(){
-            const self = this;
-            self.axios.post("/api/user/edit/"+self.user._id, self.user).then(function(response) {
-                self.$router.push('/admin/detail/'+self.user._id)
-            });
-        }
+      }
+    };
+  },
+  mounted() {
+    const self = this;
+    self.axios.post("/api/user/detail/" + self.$route.params.id).then(res => {
+      self.user = res.data.user;
+    });
+  },
+  methods: {
+    edit: function() {
+      const self = this;
+      self.axios
+        .post("/api/user/edit/" + self.user._id, self.user)
+        .then(function(response) {
+          self.$toasted.show(response.data.msg, {
+            theme: "primary",
+            position: "top-center",
+            duration: 5000
+          });
+          self.$router.push("/admin/detail/" + self.user._id);
+        });
     }
-}
+  }
+};
 </script>

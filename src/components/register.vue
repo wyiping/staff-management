@@ -83,6 +83,11 @@ export default {
       var self = this
       self.axios.post("/api/register", self.user).then(function(response) {
         if(response.data.code == 1){
+          self.$toasted.show(response.data.msg, {
+            theme: "outline",
+            position: "top-center",
+            duration: 5000
+          });
           self.$router.push('/login');
         }
       });

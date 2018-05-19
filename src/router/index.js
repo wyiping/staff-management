@@ -23,7 +23,7 @@ export default new Router({
 			children:[
 				{path:'',component: resolve => require(['../components/common/index'], resolve)},
 				{path:'detail/:id',component: resolve => require(['../components/user/detail'], resolve)},
-				{path:'user_edit',component: resolve => require(['../components/user/edit'], resolve)},
+				{path:'edit',component: resolve => require(['../components/user/edit'], resolve)},
 				{path:'list',component:resolve => require(['../components/user/list'], resolve)}
 			]
 		},

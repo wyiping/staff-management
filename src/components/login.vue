@@ -36,14 +36,19 @@ export default {
       data.name = self.name;
       data.password = self.password;
       self.axios.post("/api/login", data).then(function(response) {
-        if(response.data.code == 1){
-          sessionStorage.setItem("user", JSON.stringify(response.data.user))
-          if(response.data.user.isAdmin){
-            self.$router.push('/admin')
-          }else{
-            self.$router.push('/user')
+        if (response.data.code == 1) {
+          sessionStorage.setItem("user", JSON.stringify(response.data.user));
+          if (response.data.user.isAdmin) {
+            self.$router.push("/admin");
+          } else {
+            self.$router.push("/user");
           }
-          
+        } else {
+          self.$toasted.show(response.data.msg, {
+            theme: "outline",
+            position: "top-center",
+            duration: 5000
+          });
         }
       });
     }
