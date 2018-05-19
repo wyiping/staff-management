@@ -14,6 +14,7 @@
 				<input type="password" id="password" name="password" v-model="user.password"><br>
 				<label for="department">部门:</label>
 				<select id="department" name="department" v-model="user.department">
+						<option value="">无</option>
 						<option v-for="d in departments" :value="d._id">{{d.name}}</option>
 				</select>
 				</fieldset>
@@ -71,12 +72,12 @@ export default {
     register() {
       var self = this
       self.axios.post("/api/register", self.user).then(function(response) {
+        self.$toasted.show(response.data.msg, {
+          theme: "outline",
+          position: "top-center",
+          duration: 5000
+        });
         if(response.data.code == 1){
-          self.$toasted.show(response.data.msg, {
-            theme: "outline",
-            position: "top-center",
-            duration: 5000
-          });
           self.$router.push('/login');
         }
       });

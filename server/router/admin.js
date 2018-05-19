@@ -56,7 +56,14 @@ router.post('/list', bodyParser.json(), (req, res) => {
                     m = m.toObject()
                     m.id = m._id
                     m.phone = m.phone
-                    m.department = m.department.name
+                    if(m.department){
+                        m.department = m.department.name
+                    }
+                    if(m.isAdmin){
+                        m.role = '管理员'
+                    }else{
+                        m.role = '普通用户'
+                    }
                     delete m._id
                     delete m.isAdmin
                     delete m.password
@@ -64,6 +71,13 @@ router.post('/list', bodyParser.json(), (req, res) => {
                 })
             })
         })
+    })
+})
+
+// 查询个人信息
+router.post('/detail/:id', bodyParser.json(), (req, res) => {
+    db.User.findById(req.params.id).exec((err, data) => {
+        res.json({ user: data })
     })
 })
 

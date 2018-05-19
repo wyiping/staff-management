@@ -30,6 +30,9 @@ router.post('/login', bodyParser.json(), (req, res) => {
 
 router.post('/register', bodyParser.json(), (req, res) => {
     req.body.isAdmin = false
+    if(!req.body.department){
+        delete req.body.department
+    }
     new db.User(req.body).save(err => {
         if (err) {
             if (err.code == 11000) {

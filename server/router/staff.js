@@ -51,7 +51,9 @@ router.post('/list', bodyParser.json(), (req, res) => {
                     m = m.toObject()
                     m.id = m._id
                     m.phone = m.phone
-                    m.department = m.department.name
+                    if(m.department){
+                        m.department = m.department.name
+                    }
                     delete m._id
                     delete m.isAdmin
                     delete m.password

@@ -56,7 +56,8 @@
                                     <tr v-for="user in users">
                                         <td style="text-align:center;">{{user.workId}}</td>
                                         <td>{{user.name}}</td>
-                                        <td>{{user.department}} </td>
+                                        <td v-if="user.department != null">{{user.department}}</td>
+                                        <td v-else>无</td>
                                         <td>{{user.phone}}</td>
                                     </tr>
                                 </tbody>
@@ -98,6 +99,7 @@ export default {
             phone:self.phone
         }).then(function(response) {
             self.users = response.data.users;
+            
         })
         .catch(function(error) {
             self.error = "ERROR!" + error;

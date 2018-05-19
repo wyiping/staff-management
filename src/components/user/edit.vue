@@ -30,13 +30,14 @@
                       <th>姓名</th>
                       <td>{{user.name}}</td>
                       <th>工牌号</th>
-                      <td>{{user._id}}</td>
+                      <td>{{user.workId}}</td>
                     </tr>
                     <tr>
                       <th>年龄</th>
                       <td><input type="number" name="age" v-model="user.detail.age"></td>
                       <th>部门</th>
-                      <td>{{user.department.name}}</td>
+                      <td v-if="user.department != null">{{user.department.name}}</td>
+                      <td v-else>无</td>
                     </tr>
                     <tr>
                       <th>邮箱</th>

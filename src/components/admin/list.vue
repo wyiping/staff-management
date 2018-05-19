@@ -54,6 +54,7 @@
                   <tr>
                     <th style="width: 59px">工牌号</th>
                     <th>姓名</th>
+                    <th>角色</th>
                     <th>部门</th>
                     <th>联系方式</th>
                     <th>地址</th>
@@ -62,7 +63,9 @@
                   <tr v-for="user in users">
                     <td style="text-align:center;">{{user.workId}}</td>
                     <td>{{user.name}}</td>
-                    <td>{{user.department}} </td>
+                    <td>{{user.role}}</td>
+                    <td v-if="user.department != null">{{user.department}}</td>
+                    <td v-else>无</td>
                     <td>{{user.phone}}</td>
                     <td>{{user.detail.address}}</td>
                     <td class="icon">

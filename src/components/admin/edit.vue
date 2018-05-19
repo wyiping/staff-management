@@ -29,14 +29,24 @@
                     <tr>
                       <th>姓名</th>
                       <td>{{user.name}}</td>
-                      <th>工牌号</th>
-                      <td>{{user._id}}</td>
+                      <th>角色</th>
+                      <td>
+                        <select name="department" v-model="user.isAdmin">
+                          <option value="false">普通员工</option>
+                          <option value="true">管理员</option>
+                        </select>
+                      </td>
                     </tr>
                     <tr>
                       <th>年龄</th>
                       <td><input type="number" name="age" v-model="user.detail.age"></td>
                       <th>部门</th>
-                      <td>{{user.department.name}}</td>
+                      <td>
+                        <select name="department" v-model="user.department">
+                          <option value="">无</option>
+                          <option v-for="d in departments" :value="d._id">{{d.name}}</option>
+                        </select>
+                      </td>
                     </tr>
                     <tr>
                       <th>邮箱</th>
@@ -77,6 +87,7 @@ export default {
         name: "",
         department: "",
         phone: "",
+        isAdmin:'',
         detail: {
           age: "",
           address: "",
@@ -84,16 +95,23 @@ export default {
           introduce: "",
           sex: ""
         }
-      }
+      },
+      departments: []
     };
   },
   mounted() {
     const self = this;
-    self.axios.post("/api/user/detail/" + self.$route.params.id).then(res => {
+    self.axios.post("/api/admin/detail/" + self.$route.params.id).then(res => {
       self.user = res.data.user;
     });
+    self.getDepartments();
   },
   methods: {
+    getDepartments() {
+      this.axios.post("/api/admin/department/list").then(res => {
+        this.departments = res.data.departments;
+      });
+    },
     edit: function() {
       const self = this;
       self.axios
