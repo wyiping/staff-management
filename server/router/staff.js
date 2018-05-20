@@ -18,7 +18,9 @@ function getPages(page, pageCount) {
 
 // 获取会员列表
 router.post('/list', bodyParser.json(), (req, res) => {
-    var filter = {};
+    var filter = {
+        'status.register': '通过'
+    };
     if (req.body.name) {
         var name = req.body.name.trim()
         if (name.length > 0) {

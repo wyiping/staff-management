@@ -36,7 +36,7 @@ router.post('/login', bodyParser.json(), (req, res) => {
 
 router.post('/register', bodyParser.json(), (req, res) => {
   // 未选择部门时，department不为ObjectID，注册失败
-  if (!req.body.department) {
+  if (!req.body.department.default) {
     delete req.body.department
   }
   new db.User(req.body).save(err => {

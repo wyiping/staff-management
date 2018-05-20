@@ -18,7 +18,9 @@ function getPages(page, pageCount) {
 
 // 获取会员列表
 router.post('/list', bodyParser.json(), (req, res) => {
-    var filter = {};
+    var filter = {
+        'status.register': '通过'
+    };
     if (req.body.name) {
         var name = req.body.name.trim()
         if (name.length > 0) {
@@ -32,8 +34,7 @@ router.post('/list', bodyParser.json(), (req, res) => {
         }
     }
     if (req.body.department.default != '') {
-        filter.department = req.body.department
-        filter = { 'department.default': req.body.department.default }
+        filter['department.default'] = req.body.department.default
     }
     if (req.body.phone) {
         var phone = req.body.phone.trim()
@@ -41,6 +42,7 @@ router.post('/list', bodyParser.json(), (req, res) => {
             filter.phone = { '$regex': `.*${phone}.*?` }
         }
     }
+    console.log(filter)
     var pageSize = 10;
     var page = 1;
     db.User.find(filter).count((err, total) => {
@@ -189,8 +191,8 @@ router.post('/verify/department/:id', bodyParser.json(), (req, res) => {
         db.User.findByIdAndUpdate(req.params.id, {
             $set: {
                 'status.department': false,
-                'department.default':req.body.new,
-                'department.new':null
+                'department.default': req.body.new,
+                'department.new': null
             }
         }, (err, data) => {
             if (err) {
@@ -199,11 +201,11 @@ router.post('/verify/department/:id', bodyParser.json(), (req, res) => {
                 res.json({ code: 1, msg: '审核成功' })
             }
         })
-    }else{
+    } else {
         db.User.findByIdAndUpdate(req.params.id, {
             $set: {
                 'status.department': false,
-                'department.new':null
+                'department.new': null
             }
         }, (err, data) => {
             if (err) {
