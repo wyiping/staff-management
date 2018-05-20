@@ -44,15 +44,17 @@ router.post('/list', bodyParser.json(), (req, res) => {
         var pageCount = Math.ceil(total / pageSize);
         page = page > pageCount ? pageCount : page
         page = page < 1 ? 1 : page;
-        db.User.find(filter).skip((page - 1) * pageSize).limit(pageSize).populate("department","name").exec((err, data) => {
+        db.User.find(filter).skip((page - 1) * pageSize).limit(pageSize).populate("department.default", "name").exec((err, data) => {
             res.json({
                 page, pageCount, pages: getPages(page, pageCount),
                 users: data.map(m => {
                     m = m.toObject()
                     m.id = m._id
                     m.phone = m.phone
-                    if(m.department){
-                        m.department = m.department.name
+                    if (m.department.default) {
+                        m.department = m.department.default.name
+                    } else {
+                        m.department = null
                     }
                     delete m._id
                     delete m.isAdmin
@@ -67,7 +69,7 @@ router.post('/list', bodyParser.json(), (req, res) => {
 
 // 查询个人信息
 router.post('/detail/:id', bodyParser.json(), (req, res) => {
-    db.User.findById(req.params.id).populate("department","name").exec((err, data) => {
+    db.User.findById(req.params.id).populate("department.default department.new").exec((err, data) => {
         res.json({ user: data })
     })
 })
@@ -82,5 +84,23 @@ router.post('/edit/:id', bodyParser.json(), (req, res) => {
             res.json({ code: 1, msg: '更新成功！' });
         }
     })
+})
+
+// 申请修改部门
+router.post('/department/change', bodyParser.json(), (req, res) => {
+    db.User.findByIdAndUpdate(req.body.uid, {
+        $set: {
+            'status.department': true,
+            'department.new': req.body.new,
+        }
+    }, (err, data) => {
+        if (err) {
+            res.json({ code: 0, msg: '申请失败！' });
+        }
+        else {
+            res.json({ code: 1, msg: '申请成功！' });
+        }
+    }
+    )
 })
 module.exports = router

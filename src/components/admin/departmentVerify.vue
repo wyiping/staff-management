@@ -3,7 +3,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        注册审核
+        部门调换申请审核
         <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
@@ -11,7 +11,7 @@
           <a href="#">
             <i class="fa fa-dashboard"></i> 首页</a>
         </li>
-        <li class="active">注册审核</li>
+        <li class="active">部门调换审核</li>
       </ol>
     </section>
 
@@ -21,7 +21,7 @@
         <div class="col-md-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">员工注册审核</h3>
+              <h3 class="box-title">员工部门调换审核</h3>
             </div>
             <div class="box-body table-responsive no-padding">
               <div v-if="users.length == 0">
@@ -32,23 +32,24 @@
                   <tr>
                     <th style="width: 59px">工牌号</th>
                     <th>姓名</th>
-                    <th>部门</th>
-                    <th>联系方式</th>
-                    <th>状态</th>
+                    <th>原部门</th>
+                    <th>申请部门</th>
                     <th style="width: 20%">操作</th>
                   </tr>
                   <tr v-for="user in users">
                     <td style="text-align:center;">{{user.workId}}</td>
                     <td>{{user.name}}</td>
                     <td>
-                      <span v-if="user.department">{{user.department}}</span>
+                      <span v-if="user.department.default">{{user.department.default.name}}</span>
                       <span v-else>无</span>
                     </td>
-                    <td>{{user.phone}}</td>
-                    <td>{{user.status.register}}</td>
                     <td>
-                      <button class="btn btn-success" v-on:click="verify(user.id,'通过')">通过</button>
-                      <button class="btn btn-warning" v-on:click="verify(user.id,'未通过')">不通过</button>
+                      <span v-if="user.department.new">{{user.department.new.name}}</span>
+                      <span v-else>无</span>
+                    </td>
+                    <td>
+                      <button class="btn btn-success" v-on:click="verify(user.id,true,user.department.new._id)">通过</button>
+                      <button class="btn btn-warning" v-on:click="verify(user.id,false)">不通过</button>
                     </td>
                   </tr>
                 </tbody>
@@ -74,14 +75,17 @@ export default {
   methods: {
     getVerigies() {
       const self = this;
-      self.axios.post("/api/admin/verify/register").then(function({ data }) {
+      self.axios.post("/api/admin/verify/department").then(function({ data }) {
         self.users = data.users;
       });
     },
-    verify(id, status) {
+    verify(id, status,newid) {
       const self = this;
       self.axios
-        .post("/api/admin/verify/register/" + id + "/" + status)
+        .post("/api/admin/verify/department/" + id,{
+          status:status,
+          new:newid
+        })
         .then(function({ data }) {
           self.$toasted.show(data.msg, {
             theme: "outline",

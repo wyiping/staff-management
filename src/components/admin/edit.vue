@@ -31,7 +31,7 @@
                       <td>{{user.name}}</td>
                       <th>角色</th>
                       <td>
-                        <select name="department" v-model="user.isAdmin">
+                        <select class="form-control" name="department" v-model="user.isAdmin">
                           <option value="false">普通员工</option>
                           <option value="true">管理员</option>
                         </select>
@@ -39,10 +39,10 @@
                     </tr>
                     <tr>
                       <th>年龄</th>
-                      <td><input type="number" name="age" v-model="user.detail.age"></td>
+                      <td><input type="number" class="form-control" name="age" v-model="user.detail.age"></td>
                       <th>部门</th>
                       <td>
-                        <select name="department" v-model="user.department">
+                        <select name="department" class="form-control" v-model="user.department.default">
                           <option value="">无</option>
                           <option v-for="d in departments" :value="d._id">{{d.name}}</option>
                         </select>
@@ -50,17 +50,17 @@
                     </tr>
                     <tr>
                       <th>邮箱</th>
-                      <td><input type="email" name="email" v-model="user.detail.email"></td>
+                      <td><input type="email" class="form-control" name="email" v-model="user.detail.email"></td>
                       <th>手机号</th>
-                      <td><input type="text" name="phone" v-model="user.phone"></td>
+                      <td><input type="text" class="form-control" name="phone" v-model="user.phone"></td>
                     </tr>
                     <tr>
                       <th>住址</th>
-                      <td colspan="3"><input type="text" id="address" name="address" v-model="user.detail.address"></td>
+                      <td colspan="3"><input type="text" class="form-control" id="address" name="address" v-model="user.detail.address"></td>
                     </tr>
                     <tr>
                       <th>个人简介</th>
-                      <td colspan="3"><textarea id="introduce" rows="3" name="introduce" v-model="user.detail.introduce"></textarea></td>
+                      <td colspan="3"><textarea id="introduce" class="form-control" rows="3" name="introduce" v-model="user.detail.introduce"></textarea></td>
                     </tr>
                   </tbody>
                 </table>

@@ -32,15 +32,21 @@
             </router-link>
           </li>
           <li>
+            <router-link to="/admin/departments">
+              <i class="fa fa-building text-aqua"></i>
+              <span>部门管理</span>
+            </router-link>
+          </li>
+          <li>
             <router-link to="/admin/registerVerify">
               <i class="fa fa-id-badge text-aqua"></i>
               <span>注册审核</span>
             </router-link>
           </li>
           <li>
-            <router-link to="/admin/departments">
-              <i class="fa fa-building text-aqua"></i>
-              <span>部门管理</span>
+            <router-link to="/admin/departmentVerify">
+              <i class="fa fa-id-badge text-aqua"></i>
+              <span>更换部门审核</span>
             </router-link>
           </li>
         </ul>

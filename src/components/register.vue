@@ -13,7 +13,7 @@
 				<label for="password">密码:</label>
 				<input type="password" id="password" name="password" v-model="user.password"><br>
 				<label for="department">部门:</label>
-				<select id="department" name="department" v-model="user.department">
+				<select id="department" name="department" v-model="user.department.default">
 						<option value="">无</option>
 						<option v-for="d in departments" :value="d._id">{{d.name}}</option>
 				</select>
@@ -47,7 +47,9 @@ export default {
        user:{
           workId: '',
           name: '',
-          department: '',
+          department: {
+            default:''
+          },
           phone: '',
           detail:{
               age: '',

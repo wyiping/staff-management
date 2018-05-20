@@ -31,11 +31,9 @@ router.post('/list', bodyParser.json(), (req, res) => {
             filter.workId = workId
         }
     }
-    if (req.body.department) {
-        var department = req.body.department.trim()
-        if (department.length > 0) {
-            filter.department = department
-        }
+    if (req.body.department.default != '') {
+        filter.department = req.body.department
+        filter = { 'department.default': req.body.department.default }
     }
     if (req.body.phone) {
         var phone = req.body.phone.trim()
@@ -49,15 +47,17 @@ router.post('/list', bodyParser.json(), (req, res) => {
         var pageCount = Math.ceil(total / pageSize);
         page = page > pageCount ? pageCount : page
         page = page < 1 ? 1 : page;
-        db.User.find(filter).skip((page - 1) * pageSize).limit(pageSize).populate("department", "name").exec((err, data) => {
+        db.User.find(filter).skip((page - 1) * pageSize).limit(pageSize).populate("department.default", "name").exec((err, data) => {
             res.json({
                 page, pageCount, pages: getPages(page, pageCount),
                 users: data.map(m => {
                     m = m.toObject()
                     m.id = m._id
                     m.phone = m.phone
-                    if (m.department) {
-                        m.department = m.department.name
+                    if (m.department.default) {
+                        m.department = m.department.default.name
+                    } else {
+                        m.department = null
                     }
                     if (m.isAdmin) {
                         m.role = '管理员'
@@ -82,15 +82,17 @@ router.post('/verify/register', bodyParser.json(), (req, res) => {
         var pageCount = Math.ceil(total / pageSize);
         page = page > pageCount ? pageCount : page
         page = page < 1 ? 1 : page;
-        db.User.find({ '$or': [{ 'status.register': '待审核' }, { 'status.register': '未通过' }] }).skip((page - 1) * pageSize).limit(pageSize).populate("department", "name").exec((err, data) => {
+        db.User.find({ '$or': [{ 'status.register': '待审核' }, { 'status.register': '未通过' }] }).skip((page - 1) * pageSize).limit(pageSize).populate("department.default").exec((err, data) => {
             res.json({
                 page, pageCount, pages: getPages(page, pageCount),
                 users: data.map(m => {
                     m = m.toObject()
                     m.id = m._id
                     m.phone = m.phone
-                    if (m.department) {
-                        m.department = m.department.name
+                    if (m.department.default) {
+                        m.department = m.department.default.name
+                    } else {
+                        m.department = null
                     }
                     delete m._id
                     delete m.isAdmin
@@ -106,9 +108,9 @@ router.post('/verify/register', bodyParser.json(), (req, res) => {
 router.post('/verify/register/:id/:status', bodyParser.json(), (req, res) => {
     db.User.findByIdAndUpdate(req.params.id, { $set: { 'status.register': req.params.status } }, (err, data) => {
         if (err) {
-            res.json({ code: 0, msg: '更新错误' })
+            res.json({ code: 0, msg: '审核失败' })
         } else {
-            res.json({ code: 1, msg: '更新成功' })
+            res.json({ code: 1, msg: '审核成功' })
         }
     })
 })
@@ -153,6 +155,66 @@ router.post('/department/add', bodyParser.json(), (req, res) => {
 
 // 删除部门
 
+// 查询申请更换部门的员工
+router.post('/verify/department', bodyParser.json(), (req, res) => {
+    var pageSize = 10;
+    var page = 1;
+    db.User.find({ 'status.department': true }).count((err, total) => {
+        var pageCount = Math.ceil(total / pageSize);
+        page = page > pageCount ? pageCount : page
+        page = page < 1 ? 1 : page;
+        db.User.find({ 'status.department': true }).skip((page - 1) * pageSize).limit(pageSize).populate("department.default department.new").exec((err, data) => {
+            res.json({
+                page, pageCount, pages: getPages(page, pageCount),
+                users: data.map(m => {
+                    m = m.toObject()
+                    m.id = m._id
+                    delete m.detail
+                    delete m.phone
+                    delete m._id
+                    delete m.isAdmin
+                    delete m.password
+                    delete m.status
+                    return m
+                })
+            })
+        })
+    })
+})
+
+// 更新部门审核状态
+router.post('/verify/department/:id', bodyParser.json(), (req, res) => {
+    var status = req.body.status
+    if (status) {
+        db.User.findByIdAndUpdate(req.params.id, {
+            $set: {
+                'status.department': false,
+                'department.default':req.body.new,
+                'department.new':null
+            }
+        }, (err, data) => {
+            if (err) {
+                res.json({ code: 0, msg: '审核失败' })
+            } else {
+                res.json({ code: 1, msg: '审核成功' })
+            }
+        })
+    }else{
+        db.User.findByIdAndUpdate(req.params.id, {
+            $set: {
+                'status.department': false,
+                'department.new':null
+            }
+        }, (err, data) => {
+            if (err) {
+                res.json({ code: 0, msg: '审核失败' })
+            } else {
+                res.json({ code: 1, msg: '审核成功' })
+            }
+        })
+    }
+
+})
 // 添加管理员
 router.get('/god/add/super/admin', (req, res) => {
     req.query.status = {

@@ -64,8 +64,10 @@
                     <td style="text-align:center;">{{user.workId}}</td>
                     <td>{{user.name}}</td>
                     <td>{{user.role}}</td>
-                    <td v-if="user.department != null">{{user.department}}</td>
-                    <td v-else>无</td>
+                    <td>
+                      <span v-if="user.department">{{user.department}}</span>
+                      <span v-else>无</span>
+                    </td>
                     <td>{{user.phone}}</td>
                     <td>{{user.detail.address}}</td>
                     <td class="icon">
@@ -90,7 +92,9 @@ export default {
   name: "list",
   data: function() {
     return {
-      department:'',
+      department:{
+        default:""
+      },
       workId: "",
       name: "",
       phone: "",
@@ -101,7 +105,7 @@ export default {
   mounted() {
     const self = this;
     if(self.$route.params.department){
-      self.department = self.$route.params.department
+      self.department.default = self.$route.params.department
     }
     self.getSearch();
   },

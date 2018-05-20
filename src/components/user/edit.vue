@@ -34,29 +34,32 @@
                     </tr>
                     <tr>
                       <th>年龄</th>
-                      <td><input type="number" name="age" v-model="user.detail.age"></td>
+                      <td><input type="number" class="form-control" name="age" v-model="user.detail.age"></td>
                       <th>部门</th>
-                      <td v-if="user.department != null">{{user.department.name}}</td>
-                      <td v-else>无</td>
+                      <td >
+                        <span v-if="user.department.default != null">{{user.department.default.name}}</span>
+                        <span v-else>无</span>
+                        <span v-if="user.status.department == true">({{user.department.new.name}})</span>
+                      </td>
                     </tr>
                     <tr>
                       <th>邮箱</th>
-                      <td><input type="email" name="email" v-model="user.detail.email"></td>
+                      <td><input type="email" class="form-control" name="email" v-model="user.detail.email"></td>
                       <th>手机号</th>
-                      <td><input type="text" name="phone" v-model="user.phone"></td>
+                      <td><input type="text" class="form-control" name="phone" v-model="user.phone"></td>
                     </tr>
                     <tr>
                       <th>住址</th>
-                      <td colspan="3"><input type="text" id="address" name="address" v-model="user.detail.address"></td>
+                      <td colspan="3"><input type="text" class="form-control" id="address" name="address" v-model="user.detail.address"></td>
                     </tr>
                     <tr>
                       <th>个人简介</th>
-                      <td colspan="3"><textarea id="introduce" rows="3" name="introduce" v-model="user.detail.introduce"></textarea></td>
+                      <td colspan="3"><textarea id="introduce" class="form-control" rows="3" name="introduce" v-model="user.detail.introduce"></textarea></td>
                     </tr>
                   </tbody>
                 </table>
                 <button v-on:click="edit" class="btn btn-info">修改</button>
-                <router-link :to="'/admin/detail/' + user._id">
+                <router-link :to="'/user/detail/' + user._id">
                   <button class="btn btn-info">返回</button>
                 </router-link>
               </div>
@@ -84,6 +87,10 @@ export default {
           email: "",
           introduce: "",
           sex: ""
+        },
+        status: {
+          defaule: "",
+          new: ""
         }
       }
     };
@@ -101,7 +108,7 @@ export default {
       const self = this;
       this.axios
         .post("/api/user/edit/" + self.user._id, self.user)
-        .then(function({data}) {
+        .then(function({ data }) {
           self.$toasted.show(data.msg, {
             theme: "primary",
             position: "top-center",
