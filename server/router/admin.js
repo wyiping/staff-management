@@ -171,7 +171,16 @@ router.post('/department/add', bodyParser.json(), (req, res) => {
 })
 
 // 删除部门
-
+router.post('/department/delete/:id', (req, res) => {
+    db.Department.findByIdAndRemove(req.params.id, err => {
+        if (err) {
+            res.json({ code: 0, msg: '系统错误' });
+        }
+        else {
+            res.json({ code: 1, msg: '删除成功！' });
+        }
+    })
+})
 // 查询申请更换部门的员工
 router.post('/verify/department', bodyParser.json(), (req, res) => {
     var pageSize = 10;

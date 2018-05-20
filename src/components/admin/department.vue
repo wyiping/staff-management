@@ -34,13 +34,14 @@
                   <tr>
                     <th>id</th>
                     <th>部门名称</th>
-                    <th>查看</th>
+                    <th style="width:20%;">查看</th>
                   </tr>
                   <tr v-for="d in departments">
                     <td>{{d.id}}</td>
                     <td>{{d.name}}</td>
                     <td class="icon">
-                      <router-link :to="{name:'users',params:{department:d._id}}">查看员工</router-link>
+                      <router-link class="btn btn-success" :to="{name:'users',params:{department:d._id}}">查看员工</router-link>
+                      <button class="btn btn-warning" v-on:click="del(d._id)">删除部门</button>
                     </td>
                   </tr>
                 </tbody>
@@ -120,6 +121,17 @@ export default {
             self.getDepartments();
           }
         });
+    },
+    del(id) {
+      var self = this;
+      self.axios.post("/api/admin/department/delete/" + id).then(({ data }) => {
+        self.$toasted.show(data.msg, {
+          theme: "outline",
+          position: "top-center",
+          duration: 3000
+        });
+        self.getDepartments();
+      });
     },
     getDepartments() {
       var self = this;
