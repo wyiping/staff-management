@@ -49,6 +49,7 @@
                     <td>
                       <button class="btn btn-success" v-on:click="verify(user.id,'通过')">通过</button>
                       <button class="btn btn-warning" v-on:click="verify(user.id,'未通过')">不通过</button>
+                      <button class="btn btn-warning" v-on:click="del(user.id,user.name)">删除</button>
                     </td>
                   </tr>
                 </tbody>
@@ -84,6 +85,17 @@ export default {
     };
   },
   methods: {
+    del(id, name) {
+      var self = this;
+      self.axios.post("/api/admin/user/delete/" + id).then(({ data }) => {
+        self.$toasted.show("删除" + name + "成功！", {
+          theme: "outline",
+          position: "top-center",
+          duration: 5000
+        });
+        self.getVerigies();
+      });
+    },
     getVerigies() {
       const self = this;
       self.axios

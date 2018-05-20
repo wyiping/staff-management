@@ -72,8 +72,8 @@
                     <td>{{user.detail.address}}</td>
                     <td class="icon">
                       <i class="fa fa-address-book" v-on:click="click('/detail/'+user.id)"></i>
-                    <i class="fa fa-edit" v-on:click="click('/edit/'+user.id)"></i>
-                      <i class="fa fa-trash" v-on:click="del(user._id,user.name)"></i>
+                      <i class="fa fa-edit" v-on:click="click('/edit/'+user.id)"></i>
+                      <i class="fa fa-trash" v-on:click="del(user.id,user.name)"></i>
                     </td>
                   </tr>
                 </tbody>
@@ -145,7 +145,17 @@ export default {
     click(path) {
       this.$router.push("/admin" + path);
     },
-    del(id, name) {}
+    del(id, name) {
+      var self = this;
+      self.axios.post("/api/admin/user/delete/" + id).then(({ data }) => {
+        self.$toasted.show("删除" + name + "成功！", {
+          theme: "outline",
+          position: "top-center",
+          duration: 5000
+        });
+        self.getSearch();
+      });
+    }
   }
 };
 </script>

@@ -125,7 +125,17 @@ router.post('/detail/:id', bodyParser.json(), (req, res) => {
         res.json({ user: data })
     })
 })
-
+// 删除员工
+router.post('/user/delete/:id', (req, res) => {
+    db.User.findByIdAndRemove(req.params.id, err => {
+        if (err) {
+            res.json({ code: 0, msg: '系统错误' });
+        }
+        else {
+            res.json({ code: 1, msg: '删除成功！' });
+        }
+    })
+})
 // 查询部门
 router.post('/department/list', bodyParser.json(), (req, res) => {
     var pageSize = 10;
