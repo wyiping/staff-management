@@ -35,20 +35,26 @@ export default {
       var data = {};
       data.name = self.name;
       data.password = self.password;
-      self.axios.post("/api/login", data).then(function(response) {
-        if (response.data.code == 1) {
-          sessionStorage.setItem("user", JSON.stringify(response.data.user));
-          if (response.data.user.isAdmin) {
+      self.axios.post("/api/login", data).then(function({data}) {
+        if (data.code == 1) {
+          sessionStorage.setItem("user", JSON.stringify(data.user));
+          if (data.user.isAdmin) {
             self.$router.push("/admin");
           } else {
             self.$router.push("/user");
           }
         } else {
-          self.$toasted.show(response.data.msg, {
+          self.$toasted.show(data.msg, {
             theme: "outline",
             position: "top-center",
             duration: 5000
           });
+          if(data.code == 2){
+            self.password = ''
+          }else if(data.code == 0) {
+            self.name = ''
+            self.password = ''
+          }
         }
       });
     }

@@ -71,13 +71,13 @@ export default {
     },
     register() {
       var self = this
-      self.axios.post("/api/register", self.user).then(function(response) {
-        self.$toasted.show(response.data.msg, {
+      self.axios.post("/api/register", self.user).then(function({data}) {
+        self.$toasted.show(data.msg, {
           theme: "outline",
           position: "top-center",
           duration: 5000
         });
-        if(response.data.code == 1){
+        if(data.code == 1){
           self.$router.push('/login');
         }
       });

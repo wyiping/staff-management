@@ -19,16 +19,20 @@ var Schema = mongoose.Schema;
 var UserSchema = new Schema({
 	workId: Number,
 	name: String,
-	isAdmin: Boolean,
-	department: { type: Schema.Types.ObjectId, ref: "department" },
+	isAdmin: {type:Boolean,default:false},
+	department: { type: Schema.Types.ObjectId, ref: "department",default:null },
 	password: String,
-	phone: String,
+	phone: {type:String,default:''},
 	detail: {
-		age: Number,
-		address: String,
-		email: String,
-		introduce: String,
-		sex: String
+		age: {type:Number,default:0},
+		address: {type:String,default:''},
+		email: {type:String,default:''},
+		introduce: {type:String,default:''},
+		sex: {type:String,default:''},
+	},
+	status: {
+		register:{type:String,default:'待审核'},
+		modify: {type:String,default:''},
 	}
 });
 UserSchema.plugin(AutoIncrement, { inc_field: 'workId' })

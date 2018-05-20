@@ -101,8 +101,8 @@ export default {
       const self = this;
       this.axios
         .post("/api/user/edit/" + self.user._id, self.user)
-        .then(function(response) {
-          self.$toasted.show(response.data.msg, {
+        .then(function({data}) {
+          self.$toasted.show(data.msg, {
             theme: "primary",
             position: "top-center",
             duration: 5000

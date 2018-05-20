@@ -25,7 +25,7 @@
                   <button class="btn btn-info" title="修改" v-on:click="showModal">添加部门</button>
               </div>
             </div>
-            <div class="box-body no-padding">
+            <div class="box-body table-responsive no-padding">
               <div v-if="departments.length == 0">
                 <h3 style="text-align:center;">部门为空，请先添加部门</h3>
               </div>

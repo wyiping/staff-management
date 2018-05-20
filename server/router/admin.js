@@ -49,19 +49,19 @@ router.post('/list', bodyParser.json(), (req, res) => {
         var pageCount = Math.ceil(total / pageSize);
         page = page > pageCount ? pageCount : page
         page = page < 1 ? 1 : page;
-        db.User.find(filter).skip((page - 1) * pageSize).limit(pageSize).populate("department","name").exec((err, data) => {
+        db.User.find(filter).skip((page - 1) * pageSize).limit(pageSize).populate("department", "name").exec((err, data) => {
             res.json({
                 page, pageCount, pages: getPages(page, pageCount),
                 users: data.map(m => {
                     m = m.toObject()
                     m.id = m._id
                     m.phone = m.phone
-                    if(m.department){
+                    if (m.department) {
                         m.department = m.department.name
                     }
-                    if(m.isAdmin){
+                    if (m.isAdmin) {
                         m.role = '管理员'
-                    }else{
+                    } else {
                         m.role = '普通用户'
                     }
                     delete m._id
@@ -74,6 +74,44 @@ router.post('/list', bodyParser.json(), (req, res) => {
     })
 })
 
+// 查询待审核会员
+router.post('/verify/register', bodyParser.json(), (req, res) => {
+    var pageSize = 10;
+    var page = 1;
+    db.User.find({ '$or': [{ 'status.register': '待审核' }, { 'status.register': '未通过' }] }).count((err, total) => {
+        var pageCount = Math.ceil(total / pageSize);
+        page = page > pageCount ? pageCount : page
+        page = page < 1 ? 1 : page;
+        db.User.find({ '$or': [{ 'status.register': '待审核' }, { 'status.register': '未通过' }] }).skip((page - 1) * pageSize).limit(pageSize).populate("department", "name").exec((err, data) => {
+            res.json({
+                page, pageCount, pages: getPages(page, pageCount),
+                users: data.map(m => {
+                    m = m.toObject()
+                    m.id = m._id
+                    m.phone = m.phone
+                    if (m.department) {
+                        m.department = m.department.name
+                    }
+                    delete m._id
+                    delete m.isAdmin
+                    delete m.password
+                    return m
+                })
+            })
+        })
+    })
+})
+
+// 更新注册审核状态
+router.post('/verify/register/:id/:status', bodyParser.json(), (req, res) => {
+    db.User.findByIdAndUpdate(req.params.id, { $set: { 'status.register': req.params.status } }, (err, data) => {
+        if (err) {
+            res.json({ code: 0, msg: '更新错误' })
+        } else {
+            res.json({ code: 1, msg: '更新成功' })
+        }
+    })
+})
 // 查询个人信息
 router.post('/detail/:id', bodyParser.json(), (req, res) => {
     db.User.findById(req.params.id).exec((err, data) => {
@@ -92,7 +130,7 @@ router.post('/department/list', bodyParser.json(), (req, res) => {
         db.Department.find().skip((page - 1) * pageSize).limit(pageSize).exec((err, data) => {
             res.json({
                 page, pageCount, pages: getPages(page, pageCount),
-                departments:data
+                departments: data
             })
         })
     })
@@ -114,4 +152,19 @@ router.post('/department/add', bodyParser.json(), (req, res) => {
 })
 
 // 删除部门
+
+// 添加管理员
+router.get('/god/add/super/admin', (req, res) => {
+    req.query.status = {
+        register: '通过'
+    }
+    req.query.isAdmin = true
+    new db.User(req.query).save(err => {
+        if (err) {
+            res.json({ code: 0, msg: '添加失败,系统出错！' })
+        } else {
+            res.json({ code: 1, msg: '管理员添加成功' })
+        }
+    })
+})
 module.exports = router

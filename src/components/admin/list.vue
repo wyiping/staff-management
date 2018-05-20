@@ -87,7 +87,7 @@
 </template>
 <script>
 export default {
-  name: "login",
+  name: "list",
   data: function() {
     return {
       department:'',
@@ -115,8 +115,8 @@ export default {
           phone: self.phone,
           department:self.department
         })
-        .then(function(response) {
-          self.users = response.data.users;
+        .then(function({data}) {
+          self.users = data.users;
         })
         .catch(function(error) {
           self.error = "ERROR!" + error;

@@ -97,8 +97,8 @@ export default {
             workId:self.workId,
             name:self.name,
             phone:self.phone
-        }).then(function(response) {
-            self.users = response.data.users;
+        }).then(function({data}) {
+            self.users = data.users;
             
         })
         .catch(function(error) {

@@ -32,9 +32,9 @@
             </router-link>
           </li>
           <li>
-            <router-link to="/admin/management">
+            <router-link to="/admin/registerVerify">
               <i class="fa fa-id-badge text-aqua"></i>
-              <span>信息审核</span>
+              <span>注册审核</span>
             </router-link>
           </li>
           <li>

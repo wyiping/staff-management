@@ -70,36 +70,38 @@
 </template>
 <script>
 export default {
-    name:'detail',
-    data: function(){
-        return {
-            user:{
-                workId: '',
-                name: '',
-                department: '',
-                phone: '',
-                detail:{
-                    age: '',
-                    address: '',
-                    email: '',
-                    introduce: '',
-                    sex: ''
-                }
-            }
+  name: "detail",
+  data: function() {
+    return {
+      user: {
+        workId: "",
+        name: "",
+        department: "",
+        phone: "",
+        detail: {
+          age: "",
+          address: "",
+          email: "",
+          introduce: "",
+          sex: ""
         }
-    },
-    mounted(){
-        const self = this;
-        self.axios.post('/api/user/detail/'+self.$route.params.id).then(res=>{
-            self.user = res.data.user;
-        })
-    }
-}
+      }
+    };
+  },
+  mounted() {
+    const self = this;
+    self.axios.post("/api/user/detail/" + self.$route.params.id).then(res => {
+      self.user = res.data.user;
+    });
+  }
+};
 </script>
 <style scoped>
-th{
-    text-align: center;
-    width: 20%;
+th {
+  text-align: center;
+  width: 20%;
 }
-[v-cloak] {display: none;}
+[v-cloak] {
+  display: none;
+}
 </style>
