@@ -42,9 +42,10 @@ router.post('/list', bodyParser.json(), (req, res) => {
             filter.phone = { '$regex': `.*${phone}.*?` }
         }
     }
-    console.log(filter)
     var pageSize = 10;
-    var page = 1;
+    var page = req.body.page;
+    page = page || 1;
+    page = parseInt(page);
     db.User.find(filter).count((err, total) => {
         var pageCount = Math.ceil(total / pageSize);
         page = page > pageCount ? pageCount : page
@@ -79,7 +80,9 @@ router.post('/list', bodyParser.json(), (req, res) => {
 // 查询待审核会员
 router.post('/verify/register', bodyParser.json(), (req, res) => {
     var pageSize = 10;
-    var page = 1;
+    var page = req.body.page;
+    page = page || 1;
+    page = parseInt(page);
     db.User.find({ '$or': [{ 'status.register': '待审核' }, { 'status.register': '未通过' }] }).count((err, total) => {
         var pageCount = Math.ceil(total / pageSize);
         page = page > pageCount ? pageCount : page
@@ -126,7 +129,9 @@ router.post('/detail/:id', bodyParser.json(), (req, res) => {
 // 查询部门
 router.post('/department/list', bodyParser.json(), (req, res) => {
     var pageSize = 10;
-    var page = 1;
+    var page = req.body.page;
+    page = page || 1;
+    page = parseInt(page);
     db.Department.find().count((err, total) => {
         var pageCount = Math.ceil(total / pageSize);
         page = page > pageCount ? pageCount : page
@@ -160,7 +165,9 @@ router.post('/department/add', bodyParser.json(), (req, res) => {
 // 查询申请更换部门的员工
 router.post('/verify/department', bodyParser.json(), (req, res) => {
     var pageSize = 10;
-    var page = 1;
+    var page = req.body.page;
+    page = page || 1;
+    page = parseInt(page);
     db.User.find({ 'status.department': true }).count((err, total) => {
         var pageCount = Math.ceil(total / pageSize);
         page = page > pageCount ? pageCount : page

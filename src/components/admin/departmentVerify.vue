@@ -56,6 +56,15 @@
               </table>
             </div>
             <!-- /.box-body -->
+            <!-- box-footer -->
+            <div class="box-footer clearfix" v-if="pageCount>1">
+              <ul class="pagination pagination-sm no-margin pull-right">
+                <li v-bind:class="{ 'disabled': page == 1}"><a href="javascript:void(0)" v-on:click="page--,getVerigies()">«</a></li>
+                <li v-for="p in pages" v-bind:class="{ 'active': page == p}"><a href="javascript:void(0)" v-on:click="page=p,getVerigies()">{{p}}</a></li>
+                <li v-bind:class="{ 'disabled': page == pageCount}"><a href="javascript:void(0)" v-on:click="page++,getVerigies()">»</a></li>
+              </ul>
+            </div>
+            <!-- /.box-footer -->
           </div>
         </div>
       </div>
@@ -69,22 +78,28 @@ export default {
   name: "verify",
   data: function() {
     return {
-      users: []
+      users: [],
+      page: 1,
+      pageCount: 1,
+      pages: []
     };
   },
   methods: {
     getVerigies() {
       const self = this;
-      self.axios.post("/api/admin/verify/department").then(function({ data }) {
+      self.axios.post("/api/admin/verify/department",{page:self.page}).then(function({ data }) {
         self.users = data.users;
+        self.page = data.page;
+        self.pageCount = data.pageCount;
+        self.pages = data.pages;
       });
     },
-    verify(id, status,newid) {
+    verify(id, status, newid) {
       const self = this;
       self.axios
-        .post("/api/admin/verify/department/" + id,{
-          status:status,
-          new:newid
+        .post("/api/admin/verify/department/" + id, {
+          status: status,
+          new: newid
         })
         .then(function({ data }) {
           self.$toasted.show(data.msg, {

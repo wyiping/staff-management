@@ -68,6 +68,15 @@
               </table>
             </div>
             <!-- /.box-body -->
+            <!-- box-footer -->
+            <div class="box-footer clearfix" v-if="pageCount>1">
+              <ul class="pagination pagination-sm no-margin pull-right">
+                <li v-bind:class="{ 'disabled': page == 1}"><a href="javascript:void(0)" v-on:click="page--,getStaff()">«</a></li>
+                <li v-for="p in pages" v-bind:class="{ 'active': page == p}"><a href="javascript:void(0)" v-on:click="page=p,getStaff()">{{p}}</a></li>
+                <li v-bind:class="{ 'disabled': page == pageCount}"><a href="javascript:void(0)" v-on:click="page++,getStaff()">»</a></li>
+              </ul>
+            </div>
+            <!-- /.box-footer -->
           </div>
         </div>
       </div>
@@ -84,14 +93,14 @@ export default {
       name: "",
       phone: "",
       error: "",
-      users: []
+      users: [],
+      page: 1,
+      pageCount: 1,
+      pages: []
     };
   },
   mounted() {
-    const self = this;
-    self.axios.post("/api/user/list").then(res => {
-      self.users = res.data.users;
-    });
+    this.getStaff();
   },
   methods: {
     getSearch() {
@@ -108,6 +117,15 @@ export default {
         .catch(function(error) {
           self.error = "ERROR!" + error;
         });
+    },
+    getStaff() {
+      const self = this;
+      self.axios.post("/api/user/list", { page: self.page }).then(({data}) => {
+        self.users = data.users;
+        self.page = data.page;
+        self.pageCount = data.pageCount;
+        self.pages = data.pages;
+      });
     }
   }
 };

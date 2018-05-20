@@ -72,7 +72,7 @@
                     <td>{{user.detail.address}}</td>
                     <td class="icon">
                       <i class="fa fa-address-book" v-on:click="click('/detail/'+user.id)"></i>
-                      <i class="fa fa-edit" v-on:click="click('/edit/'+user.id)"></i>
+                    <i class="fa fa-edit" v-on:click="click('/edit/'+user.id)"></i>
                       <i class="fa fa-trash" v-on:click="del(user._id,user.name)"></i>
                     </td>
                   </tr>
@@ -80,6 +80,15 @@
               </table>
             </div>
             <!-- /.box-body -->
+            <!-- box-footer -->
+            <div class="box-footer clearfix" v-if="pageCount>1">
+              <ul class="pagination pagination-sm no-margin pull-right">
+                <li v-bind:class="{ 'disabled': page == 1}"><a href="javascript:void(0)" v-on:click="page--,getSearch()">«</a></li>
+                <li v-for="p in pages" v-bind:class="{ 'active': page == p}"><a href="javascript:void(0)" v-on:click="page=p,getSearch()">{{p}}</a></li>
+                <li v-bind:class="{ 'disabled': page == pageCount}"><a href="javascript:void(0)" v-on:click="page++,getSearch()">»</a></li>
+              </ul>
+            </div>
+            <!-- /.box-footer -->
           </div>
         </div>
       </div>
@@ -92,20 +101,23 @@ export default {
   name: "list",
   data: function() {
     return {
-      department:{
-        default:""
+      department: {
+        default: ""
       },
       workId: "",
       name: "",
       phone: "",
       error: "",
-      users: []
+      users: [],
+      page: 1,
+      pageCount: 1,
+      pages: []
     };
   },
   mounted() {
     const self = this;
-    if(self.$route.params.department){
-      self.department.default = self.$route.params.department
+    if (self.$route.params.department) {
+      self.department.default = self.$route.params.department;
     }
     self.getSearch();
   },
@@ -117,21 +129,23 @@ export default {
           workId: self.workId,
           name: self.name,
           phone: self.phone,
-          department:self.department
+          department: self.department,
+          page: self.page
         })
-        .then(function({data}) {
+        .then(function({ data }) {
+          self.page = data.page;
+          self.pageCount = data.pageCount;
+          self.pages = data.pages;
           self.users = data.users;
         })
         .catch(function(error) {
           self.error = "ERROR!" + error;
         });
     },
-    click(path){
-      this.$router.push('/admin'+path)
+    click(path) {
+      this.$router.push("/admin" + path);
     },
-    del(id,name){
-      
-    }
+    del(id, name) {}
   }
 };
 </script>

@@ -47,6 +47,15 @@
               </table>
             </div>
             <!-- /.box-body -->
+            <!-- box-footer -->
+            <div class="box-footer clearfix" v-if="pageCount>1">
+              <ul class="pagination pagination-sm no-margin pull-right">
+                <li v-bind:class="{ 'disabled': page == 1}"><a href="javascript:void(0)" v-on:click="page--,getDepartments()">«</a></li>
+                <li v-for="p in pages" v-bind:class="{ 'active': page == p}"><a href="javascript:void(0)" v-on:click="page=p,getDepartments()">{{p}}</a></li>
+                <li v-bind:class="{ 'disabled': page == pageCount}"><a href="javascript:void(0)" v-on:click="page++,getDepartments()">»</a></li>
+              </ul>
+            </div>
+            <!-- /.box-footer -->
           </div>
         </div>
       </div>
@@ -84,7 +93,10 @@ export default {
       departments: [],
       department: {
         name: ""
-      }
+      },
+      page: 1,
+      pageCount: 1,
+      pages: []
     };
   },
   mounted() {
@@ -110,9 +122,15 @@ export default {
         });
     },
     getDepartments() {
-      this.axios.post("/api/admin/department/list").then(res => {
-        this.departments = res.data.departments;
-      });
+      var self = this;
+      self.axios
+        .post("/api/admin/department/list", { page: self.page })
+        .then(({ data }) => {
+          self.departments = data.departments;
+          self.page = data.page;
+          self.pageCount = data.pageCount;
+          self.pages = data.pages;
+        });
     },
     showModal() {
       $("#add").modal("show");

@@ -41,7 +41,9 @@ router.post('/list', bodyParser.json(), (req, res) => {
         }
     }
     var pageSize = 10;
-    var page = 1;
+    var page = req.body.page;
+    page = page || 1;
+    page = parseInt(page);
     db.User.find(filter).count((err, total) => {
         var pageCount = Math.ceil(total / pageSize);
         page = page > pageCount ? pageCount : page
