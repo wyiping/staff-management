@@ -60,14 +60,14 @@ export default {
       name: "nav-menu",
       index: "",
       user: "",
-      menus:[],
+      menus: [],
       userMenus: [
         {
           title: "系统",
           icon: "dashboard",
           sub: [
-            { title: "我的资料", url: "/user/detail",icon:"user" },
-            { title: "修改资料", url: "/user/edit" ,icon:"edit"}
+            { title: "我的资料", url: "/user/detail", icon: "user" },
+            { title: "修改资料", url: "/user/edit", icon: "edit" }
           ]
         },
         {
@@ -81,26 +81,26 @@ export default {
           title: "系统",
           icon: "dashboard",
           sub: [
-            { title: "我的资料", url: "/admin/detail",icon:"user" },
-            { title: "修改资料", url: "/admin/edit" ,icon:"edit"}
+            { title: "我的资料", url: "/user/detail", icon: "user" },
+            { title: "修改资料", url: "/admin/edit", icon: "edit" }
           ]
         },
         {
           title: "管理",
           icon: "dashboard",
           sub: [
-            { title: "员工列表", url: "/admin/users",icon:"user" },
-            { title: "部门管理", url: "/admin/departments" ,icon:"edit"}
+            { title: "员工列表", url: "/admin/users", icon: "user" },
+            { title: "部门管理", url: "/admin/departments", icon: "edit" }
           ]
         },
         {
           title: "审核",
           icon: "dashboard",
           sub: [
-            { title: "注册审核", url: "/admin/registerVerify",icon:"user" },
-            { title: "部门审核", url: "/admin/departmentVerify" ,icon:"edit"}
+            { title: "注册审核", url: "/admin/registerVerify", icon: "user" },
+            { title: "部门审核", url: "/admin/departmentVerify", icon: "edit" }
           ]
-        },
+        }
       ]
     };
   },
@@ -117,10 +117,11 @@ export default {
     var self = this;
     let user = JSON.parse(sessionStorage.getItem("user"));
     self.user = user;
-    if(user.isAdmin){
-      self.menus = self.adminMenus
-    }else{
-      self.menus = self.userMenus
+    if (user.isAdmin) {
+      self.adminMenus[0].sub[1].url = "/admin/edit/" + user.id;
+      self.menus = self.adminMenus;
+    } else {
+      self.menus = self.userMenus;
     }
   }
 };

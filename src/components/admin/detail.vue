@@ -1,32 +1,12 @@
 <template>
-  <div>
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        个人简历
-        <small>Control panel</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li>
-          <a href="#"><i class="fa fa-dashboard"></i> 首页</a>
-        </li>
-        <li class="active">个人简历</li>
-      </ol>
-    </section>
+  <x-content>
+    <span slot="title">个人资料</span>
 
     <!-- Main content -->
     <section class="content">
       <div class="row">
         <div class="col-md-12">
           <div class="box">
-            <div class="box-header with-border text-center">
-              <h3 class="box-title">{{user.name}}的简历</h3>
-              <div class="box-tools pull-right">
-                <router-link :to="'/admin/edit/'+user._id" class="btn btn-info" title="修改">
-                  <i class="fa fa-edit"></i>
-                </router-link>
-              </div>
-            </div>
             <div class="box-body no-padding">
               <div class="col-md-6 col-md-push-3 text-center">
                 <table class="table table-bordered" v-cloak>
@@ -63,6 +43,9 @@
                   </tbody>
                 </table>
               </div>
+              <router-link :to="'/admin/edit/'+user._id" class="button is-success" title="修改">
+                <i class="fa fa-edit"></i>修改
+              </router-link>
             </div>
             <!-- /.box-body -->
           </div>
@@ -70,10 +53,14 @@
       </div>
     </section>
     <!-- /.content -->
-  </div>
+  </x-content>
 </template>
 <script>
+import XContent from "../common/XContent";
 export default {
+  components: {
+    XContent
+  },
   name: "detail",
   data: function() {
     return {

@@ -1,19 +1,6 @@
 <template>
-  <div>
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        部门调换申请审核
-        <small>Control panel</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li>
-          <a href="#">
-            <i class="fa fa-dashboard"></i> 首页</a>
-        </li>
-        <li class="active">部门调换审核</li>
-      </ol>
-    </section>
+  <x-content>
+    <span slot="title">部门调换申请审核</span>
 
     <!-- Main content -->
     <section class="content">
@@ -48,8 +35,8 @@
                       <span v-else>无</span>
                     </td>
                     <td>
-                      <button class="btn btn-success" v-on:click="verify(user.id,true,user.department.new._id)">通过</button>
-                      <button class="btn btn-warning" v-on:click="verify(user.id,false)">不通过</button>
+                      <button class="button is--success" v-on:click="verify(user.id,true,user.department.new._id)">通过</button>
+                      <button class="button is--warning" v-on:click="verify(user.id,false)">不通过</button>
                     </td>
                   </tr>
                 </tbody>
@@ -70,11 +57,14 @@
       </div>
     </section>
     <!-- /.content -->
-  </div>
+  </x-content>
 </template>
-
 <script>
+import XContent from "../common/XContent";
 export default {
+  components: {
+    XContent
+  },
   name: "verify",
   data: function() {
     return {
