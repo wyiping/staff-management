@@ -1,46 +1,33 @@
 <template>
-  <div>
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        员工列表
-        <small>Control panel</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li>
-          <a href="#">
-            <i class="fa fa-dashboard"></i> 首页</a>
-        </li>
-        <li class="active">员工列表</li>
-      </ol>
-    </section>
+  <x-content>
+    <span slot="title">员工列表</span>
 
     <!-- Main content -->
     <section class="content">
       <div class="row">
         <div class="col-md-12">
           <div class="box box-info">
-            <div class="box-header with-border col-md-push-1">
-              <div class="col-md-3">
-                <div class="input-group">
-                  <span class="input-group-addon">工牌号</span>
-                  <input type="text" class="form-control" placeholder="工牌号" v-model="workId">
-                </div>
+            <div class="control is-horizontal">
+              <div class="control-label">
+                  <span class="label">工牌号</span>
               </div>
-              <div class="col-md-3">
-                <div class="input-group">
-                  <span class="input-group-addon">姓名</span>
-                  <input type="text" class="form-control" placeholder="姓名" v-model="name">
-                </div>
+              <div class="input-group">
+                <input type="text" class="input" placeholder="工牌号" v-model="workId">
               </div>
-              <div class="col-md-3">
-                <div class="input-group">
-                  <span class="input-group-addon">手机</span>
-                  <input type="text" class="form-control" placeholder="手机" v-model="phone">
-                </div>
+              <div class="control-label">
+                <span class="label">姓名</span>
+              </div>
+              <div class="input-group">
+                <input type="text" class="input" placeholder="姓名" v-model="name">
+              </div>
+              <div class="control-label">
+                  <span class="label">手机</span>
+              </div>
+              <div class="input-group">
+                <input type="text" class="input" placeholder="手机" v-model="phone">
               </div>
               <div class="col-md-1">
-                <button type="button" class="btn btn-block btn-info" v-on:click="getSearch">查询</button>
+                <button type="button" class="button" v-on:click="getSearch">查询</button>
               </div>
             </div>
           </div>
@@ -52,7 +39,7 @@
               <table class="table table-bordered" v-else>
                 <tbody>
                   <tr>
-                    <th style="width: 59px">工牌号</th>
+                    <th style="width: 80px">工牌号</th>
                     <th>姓名</th>
                     <th>部门</th>
                     <th>联系方式</th>
@@ -82,11 +69,15 @@
       </div>
     </section>
     <!-- /.content -->
-  </div>
+  </x-content>
 </template>
 <script>
+import XContent from "../common/XContent";
 export default {
   name: "login",
+  components: {
+    XContent
+  },
   data: function() {
     return {
       workId: "",

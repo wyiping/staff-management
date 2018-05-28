@@ -1,29 +1,22 @@
 <template>
-    <div>
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <h1>
-                欢迎进入员工管理系统！
-            </h1>
-            <ol class="breadcrumb">
-                <li>
-                    <a href="#"><i class="fa fa-dashboard"></i> 首页</a>
-                </li>
-            </ol>
-        </section>
-
-        <!-- Main content -->
-        <section class="content">
-
-        </section>
-        <!-- /.content -->
-    </div>
+  <x-content>
+    <span slot="title">首页</span>
+    <!-- Main content -->
+    <section class="content">
+      <h2 class="title is-2">欢迎进入员工管理系统！</h2>
+    </section>
+    <!-- /.content -->
+  </x-content>
 </template>
 <script>
-    
+import XContent from "../common/XContent";
+export default {
+  components: {
+    XContent
+  },
+ 
+};
 </script>
 <style scoped>
-h1{
-    text-align: center;
-}
+
 </style>
