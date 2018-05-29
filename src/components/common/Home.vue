@@ -16,6 +16,7 @@
 <script>
 import "@/assets/css/font-awesome.css";
 import "@/assets/css/bulma.css";
+import "@/assets/css/pagination.css";
 // vuex全局数据
 import store from "../../store";
 import XHeader from "./XHeader";
