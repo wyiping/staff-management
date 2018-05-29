@@ -10,21 +10,21 @@ router.post('/login', bodyParser.json(), (req, res) => {
       res.json({ code: 0, msg: '系统错误,请重试' })
     } else {
       if (count > 0) {
-        db.User.findOne({ name: req.body.name }, (err, data) => {
-          if (data.status.register == '通过') {
-            if (req.body.password == data.password) {
-              let user = {}
-              user.id = data.id
-              user.name = data.name
-              user.isAdmin = data.isAdmin
-              res.json({ code: 1, msg: '登录成功', user })
-            } else {
-              res.json({ code: 2, msg: '密码错误,请重新输入' })
+        db.User.findOne({ name: req.body.name,password:req.body.password }, (err, data) => {
+          if(data){
+            if (data.status.register == '通过') {
+                let user = {}
+                user.id = data.id
+                user.name = data.name
+                user.isAdmin = data.isAdmin
+                res.json({ code: 1, msg: '登录成功', user })
+            } else if (data.status.register == '待审核') {
+              res.json({ code: 3, msg: '您的注册信息正在审核，请稍等' })
+            }else {
+              res.json({ code: 4, msg: '您的注册信息审核未通过，请联系管理员' })
             }
-          } else if (data.status.register == '待审核') {
-            res.json({ code: 3, msg: '您的注册信息正在审核，请稍等' })
-          }else {
-            res.json({ code: 4, msg: '您的注册信息审核未通过，请联系管理员' })
+          }else{
+            res.json({ code: 2, msg: '密码错误,请重新输入' })
           }
         })
       } else {
