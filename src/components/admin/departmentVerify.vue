@@ -35,8 +35,8 @@
                       <span v-else>无</span>
                     </td>
                     <td>
-                      <button class="button is--success" v-on:click="verify(user.id,true,user.department.new._id)">通过</button>
-                      <button class="button is--warning" v-on:click="verify(user.id,false)">不通过</button>
+                      <button class="button is-success" v-on:click="verify(user.id,true,user.department.new._id)">通过</button>
+                      <button class="button is-warning" v-on:click="verify(user.id,false)">不通过</button>
                     </td>
                   </tr>
                 </tbody>
