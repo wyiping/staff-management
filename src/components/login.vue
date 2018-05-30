@@ -11,6 +11,8 @@
             <form v-on:submit.prevent="login">
                 <input type="text" placeholder="用户名" name="name" v-model="name">
                 <br>
+                <input type="text" v-show="isRepeat" placeholder="工号" name="name" v-model="wordId">
+                <br v-show="isRepeat">
                 <input type="password" placeholder="密码" name="password" v-model="password">
                 <br>
                 <input type="submit" value="登录">
@@ -21,12 +23,15 @@
     </div>
 </template>
 <script>
+var debounce = require("lodash.debounce");
 export default {
   name: "login",
   data: function() {
     return {
       name: "",
-      password: ""
+      password: "",
+      wordId: "",
+      isRepeat: false
     };
   },
   methods: {
@@ -35,7 +40,8 @@ export default {
       var data = {};
       data.name = self.name;
       data.password = self.password;
-      self.axios.post("/api/login", data).then(function({data}) {
+      data.wordId = self.wordId;
+      self.axios.post("/api/login", data).then(function({ data }) {
         if (data.code == 1) {
           sessionStorage.setItem("user", JSON.stringify(data.user));
           if (data.user.isAdmin) {
@@ -49,14 +55,37 @@ export default {
             position: "top-center",
             duration: 5000
           });
-          if(data.code == 2){
-            self.password = ''
-          }else if(data.code == 0) {
-            self.name = ''
-            self.password = ''
+          if (data.code == 2) {
+            self.password = "";
+          } else if (data.code == 0) {
+            self.name = "";
+            self.password = "";
           }
         }
       });
+    },
+    getRepeat() {
+      const self = this;
+      self.axios.post("/api/repeat", { name: self.name }).then(({ data }) => {
+        if (data.code) {
+          self.isRepeat = true;
+        }else{
+          self.isRepeat = false;
+        }
+      });
+    }
+  },
+  created: function() {
+    // `_.debounce` 是一个通过 Lodash 限制操作频率的函数。
+    // 在这个例子中，我们希望限制访问 yesno.wtf/api 的频率
+    // AJAX 请求直到用户输入完毕才会发出。想要了解更多关于
+    // `_.debounce` 函数 (及其近亲 `_.throttle`) 的知识，
+    // 请参考：https://lodash.com/docs#debounce
+    this.debouncedCheckRepeat = debounce(this.getRepeat, 1000);
+  },
+  watch: {
+    name: function() {
+      this.debouncedCheckRepeat();
     }
   }
 };
