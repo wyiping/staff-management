@@ -11,7 +11,7 @@
             <form v-on:submit.prevent="login">
                 <input type="text" placeholder="用户名" name="name" v-model="name">
                 <br>
-                <input type="text" v-show="isRepeat" placeholder="工号" name="name" v-model="wordId">
+                <input type="text" v-show="isRepeat" placeholder="工号" name="name" v-model="workId">
                 <br v-show="isRepeat">
                 <input type="password" placeholder="密码" name="password" v-model="password">
                 <br>
@@ -30,7 +30,7 @@ export default {
     return {
       name: "",
       password: "",
-      wordId: "",
+      workId: "",
       isRepeat: false
     };
   },
@@ -40,7 +40,7 @@ export default {
       var data = {};
       data.name = self.name;
       data.password = self.password;
-      data.wordId = self.wordId;
+      data.workId = self.workId;
       self.axios.post("/api/login", data).then(function({ data }) {
         if (data.code == 1) {
           sessionStorage.setItem("user", JSON.stringify(data.user));
@@ -76,11 +76,6 @@ export default {
     }
   },
   created: function() {
-    // `_.debounce` 是一个通过 Lodash 限制操作频率的函数。
-    // 在这个例子中，我们希望限制访问 yesno.wtf/api 的频率
-    // AJAX 请求直到用户输入完毕才会发出。想要了解更多关于
-    // `_.debounce` 函数 (及其近亲 `_.throttle`) 的知识，
-    // 请参考：https://lodash.com/docs#debounce
     this.debouncedCheckRepeat = debounce(this.getRepeat, 1000);
   },
   watch: {
@@ -229,7 +224,7 @@ export default {
 }
 
 .login a {
-  position: absolute;
+  /* position: absolute; */
   left: 200px;
   font-family: Poppins-Regular;
   font-size: 14px;

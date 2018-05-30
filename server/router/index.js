@@ -11,7 +11,17 @@ router.post('/login', bodyParser.json(), (req, res) => {
       res.json({ code: 0, msg: '系统错误,请重试' })
     } else {
       if (count > 0) {
-        db.User.findOne({ name: req.body.name, password: req.body.password }, (err, data) => {
+        var filter = {
+          'name':req.body.name,
+          'password':req.body.password
+        };
+        if (req.body.workId) {
+          var workId = req.body.workId.trim()
+          if (workId.length > 0) {
+            filter.workId = workId
+          }
+        }
+        db.User.findOne(filter, (err, data) => {
           if (data) {
             if (data.status.register == '通过') {
               let user = {}
