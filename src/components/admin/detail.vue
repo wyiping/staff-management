@@ -79,11 +79,19 @@ export default {
       }
     };
   },
+  methods: {
+    getDetail() {
+      const self = this;
+      self.axios.post("/api/user/detail/" + self.$route.params.id).then(res => {
+        self.user = res.data.user;
+      });
+    }
+  },
   mounted() {
-    const self = this;
-    self.axios.post("/api/user/detail/" + self.$route.params.id).then(res => {
-      self.user = res.data.user;
-    });
+    this.getDetail();
+  },
+  watch:{
+    "$route":"getDetail"
   }
 };
 </script>

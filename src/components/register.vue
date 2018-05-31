@@ -88,6 +88,9 @@ export default {
 };
 </script>
 <style>
+html{
+  overflow-y: scroll;
+}
 .body {
   position: fixed;
   top: -20px;

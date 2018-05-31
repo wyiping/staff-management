@@ -147,6 +147,9 @@ export default {
         self.getSearch();
       });
     }
+  },
+  watch: {
+    $route: "getSearch"
   }
 };
 </script>
