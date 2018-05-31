@@ -106,15 +106,16 @@ export default {
     };
   },
   mounted() {
-    const self = this;
-    if (self.$route.params.department) {
-      self.department.default = self.$route.params.department;
-    }
-    self.getSearch();
+    this.getSearch();
   },
   methods: {
     getSearch() {
       const self = this;
+      if (self.$route.params.department) {
+        self.department.default = self.$route.params.department;
+      }else{
+        self.department.default = ""
+      }
       self.axios
         .post("/api/admin/list", {
           workId: self.workId,
