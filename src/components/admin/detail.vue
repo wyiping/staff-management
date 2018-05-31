@@ -82,9 +82,11 @@ export default {
   methods: {
     getDetail() {
       const self = this;
-      self.axios.post("/api/user/detail/" + self.$route.params.id).then(res => {
-        self.user = res.data.user;
-      });
+      if(self.$route.params.id){
+        self.axios.post("/api/user/detail/" + self.$route.params.id).then(res => {
+          self.user = res.data.user;
+        });
+      }
     }
   },
   mounted() {

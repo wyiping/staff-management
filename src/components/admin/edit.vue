@@ -76,7 +76,7 @@ export default {
         name: "",
         department: "",
         phone: "",
-        isAdmin:'',
+        isAdmin: "",
         detail: {
           age: "",
           address: "",
@@ -90,12 +90,18 @@ export default {
   },
   mounted() {
     const self = this;
-    self.axios.post("/api/admin/detail/" + self.$route.params.id).then(res => {
-      self.user = res.data.user;
-    });
+    self.getDetail();
     self.getDepartments();
   },
   methods: {
+    getDetail() {
+      const self = this;
+      if(self.$route.params.id){
+        self.axios.post("/api/user/detail/" + self.$route.params.id).then(res => {
+          self.user = res.data.user;
+        });
+      }
+    },
     getDepartments() {
       this.axios.post("/api/admin/department/list").then(res => {
         this.departments = res.data.departments;
@@ -105,7 +111,7 @@ export default {
       const self = this;
       self.axios
         .post("/api/user/edit/" + self.user._id, self.user)
-        .then(function({data}) {
+        .then(function({ data }) {
           self.$toasted.show(data.msg, {
             theme: "primary",
             position: "top-center",
@@ -114,6 +120,9 @@ export default {
           self.$router.push("/admin/detail/" + self.user._id);
         });
     }
+  },
+  watch: {
+    $route: "getDetail"
   }
 };
 </script>
