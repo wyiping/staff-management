@@ -85,7 +85,10 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
+html{
+  overflow-x: scroll;
+}
 .body {
   position: fixed;
   top: -20px;
