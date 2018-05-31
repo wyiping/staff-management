@@ -9,13 +9,13 @@
 			<fieldset>
 				<legend><span class="number">1</span>基本信息</legend>
 				<label for="name">姓名:</label>
-				<input type="text" id="name" name="name" v-model="user.name">
+				<input type="text" id="name" name="name" v-model="user.name" required>
 				<label for="password">密码:</label>
-				<input type="password" id="password" name="password" v-model="user.password"><br>
+				<input type="password" id="password" name="password" v-model="user.password" required><br>
 				<label for="department">部门:</label>
 				<select id="department" name="department" v-model="user.department.default">
 						<option value="">无</option>
-						<option v-for="d in departments" :value="d._id">{{d.name}}</option>
+						<option v-for="(d,i) in departments" :value="d._id" :key="i">{{d.name}}</option>
 				</select>
 				</fieldset>
 
@@ -26,9 +26,9 @@
 				<label for="address">地址:</label>
 				<input type="text" id="address" name="address" v-model="user.detail.address"><br>
 				<label for="phone">手机:</label>
-				<input type="text" id="phone" name="phone" v-model="user.phone">
+				<input type="text" id="phone" name="phone" v-model="user.phone" required>
 				<label for="mail">Email:</label>
-				<input type="email" id="mail" name="email" v-model="user.detail.email"><br>
+				<input type="email" id="mail" name="email" v-model="user.detail.email" required><br>
 				<label>性别:</label>
 				<input type="radio" id="male" value="男" name="sex" v-model="user.detail.sex"><label for="male" class="light">男</label>
 				<input type="radio" id="female" value="女" name="sex" v-model="user.detail.sex"><label for="female" class="light">女</label><br>
