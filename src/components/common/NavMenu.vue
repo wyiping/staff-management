@@ -64,41 +64,64 @@ export default {
       userMenus: [
         {
           title: "系统",
-          icon: "dashboard",
+          icon: "cube",
           sub: [
-            { title: "我的资料", url: "/user/detail", icon: "user" },
-            { title: "修改资料", url: "/user/edit", icon: "edit" }
+            { title: "首页", icon: "home", url: "/user/" },
+            { title: "我的资料", url: "/user/detail", icon: "user" }
           ]
         },
         {
           title: "功能",
           icon: "th",
-          sub: [{ title: "员工列表", icon: "cube", url: "/user/users" }]
+          sub: [{ title: "员工列表", url: "/user/users", icon: "list-ol" }]
+        },
+        {
+          title: "设置",
+          icon: "cogs",
+          sub: [
+            { title: "修改资料", url: "/user/edit", icon: "edit" },
+            { title: "申请部门调整", url: "/user/changeD", icon: "building" },
+            { title: "申请管理员", url: "/user/changeR", icon: "key" }
+          ]
         }
       ],
       adminMenus: [
         {
-          title: "系统",
-          icon: "dashboard",
+          title: "个人",
+          icon: "address-book",
           sub: [
             { title: "我的资料", url: "/user/detail", icon: "user" },
             { title: "修改资料", url: "/admin/edit", icon: "edit" }
           ]
         },
         {
-          title: "管理",
-          icon: "dashboard",
+          title: "员工管理",
+          icon: "users",
           sub: [
-            { title: "员工列表", url: "/admin/users", icon: "user" },
-            { title: "部门管理", url: "/admin/departments", icon: "edit" }
+            { title: "员工列表", url: "/admin/users", icon: "list-ol" },
+            {
+              title: "注册审核",
+              url: "/admin/registerVerify",
+              icon: "registered"
+            },
+            { title: "角色审核", url: "/admin/roleVerify", icon: "user-plus" }
           ]
         },
         {
-          title: "审核",
-          icon: "dashboard",
+          title: "部门管理",
+          icon: "building",
           sub: [
-            { title: "注册审核", url: "/admin/registerVerify", icon: "user" },
-            { title: "部门审核", url: "/admin/departmentVerify", icon: "edit" }
+            { title: "部门列表", url: "/admin/departments", icon: "list-ol" },
+            {
+              title: "添加部门",
+              url: "/admin/addDepartments",
+              icon: "plus-square"
+            },
+            {
+              title: "部门审核",
+              url: "/admin/departmentVerify",
+              icon: "codepen"
+            }
           ]
         }
       ]

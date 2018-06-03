@@ -3,7 +3,7 @@
     <div class="hero-head">
       <nav class="nav">
         <div class="nav-left">
-          <router-link class="nav-item is-brand" to="/">
+          <router-link class="nav-item is-brand" :to="index">
             员工管理系统
           </router-link>
         </div>
@@ -25,7 +25,8 @@ export default {
   data() {
     return {
       status: false,
-      name: "xheader"
+      name: "xheader",
+      index: ""
     };
   },
   methods: {
@@ -41,6 +42,11 @@ export default {
     var self = this;
     var user = JSON.parse(sessionStorage.getItem("user"));
     self.name = user.name;
+    if(user.isAdmin){
+      self.index = "/admin"
+    }else{
+      self.index = "/user"
+    }
   }
 };
 </script>
