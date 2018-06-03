@@ -69,7 +69,8 @@ export default {
       self.axios.post("/api/repeat", { name: self.name }).then(({ data }) => {
         if (data.code) {
           self.isRepeat = true;
-        }else{
+        } else {
+          self.workId = "";
           self.isRepeat = false;
         }
       });
@@ -86,7 +87,7 @@ export default {
 };
 </script>
 <style scoped>
-html{
+html {
   overflow-x: scroll;
 }
 .body {
