@@ -36,6 +36,7 @@ var UserSchema = new Schema({
 	status: {
 		register: { type: String, default: '待审核' },
 		department: { type: Boolean, default: false },
+		role: { type: Boolean, default: false }
 	}
 });
 UserSchema.plugin(AutoIncrement, { inc_field: 'workId' })

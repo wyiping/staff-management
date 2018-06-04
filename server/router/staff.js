@@ -136,4 +136,36 @@ router.post('/department/change', bodyParser.json(), (req, res) => {
     }
     )
 })
+// 查询角色状态
+router.post('/role/status/:id', (req, res) => {
+    db.User.findById(req.params.id).exec((err, data) => {
+        if (err) {
+            res.json({ code: 0, msg: '系统错误', user: null });
+        }
+        else {
+            res.json({
+                code: 1, user: {
+                    id: data._id,
+                    status: data.status.role ? true : false
+                }
+            });
+        }
+    })
+})
+// 申请管理员
+router.post('/role/change/:id', (req, res) => {
+    db.User.findByIdAndUpdate(req.params.id, {
+        $set: {
+            'status.role': true,
+        }
+    }, (err, data) => {
+        if (err) {
+            res.json({ code: 0, msg: '申请失败！' });
+        }
+        else {
+            res.json({ code: 1, msg: '申请成功！' });
+        }
+    }
+    )
+})
 module.exports = router

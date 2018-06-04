@@ -25,6 +25,7 @@ export default new Router({
 				{path:'detail',component: resolve => require(['../components/user/detail'], resolve)},
 				{path:'edit/:id',component: resolve => require(['../components/user/edit'], resolve)},
 				{path:'users',component:resolve => require(['../components/user/list'], resolve)},
+				{path:'changeR/:id',component:resolve => require(['../components/user/changeR'], resolve)},
 				{path:'changeD/:id',component:resolve => require(['../components/user/changeD'], resolve)}
 			]
 		},
