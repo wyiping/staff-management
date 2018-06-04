@@ -243,6 +243,45 @@ router.post('/verify/department/:id', bodyParser.json(), (req, res) => {
     }
 
 })
+// 查询申请管理员的员工
+router.post('/verify/role', bodyParser.json(), (req, res) => {
+    var pageSize = 10;
+    var page = req.body.page;
+    page = page || 1;
+    page = parseInt(page);
+    db.User.find({ 'status.role': true }).count((err, total) => {
+
+        var pageCount = Math.ceil(total / pageSize);
+        page = page > pageCount ? pageCount : page
+        page = page < 1 ? 1 : page;
+        db.User.find({ 'status.role': true }).skip((page - 1) * pageSize).limit(pageSize).populate("department.default department.new").exec((err, data) => {
+            res.json({
+                page, pageCount, pages: getPages(page, pageCount),
+                users: data.map(m => {
+                    m = m.toObject()
+                    m.id = m._id
+                    m.department = m.department.default ? m.department.default.name : '无'
+                    delete m.detail
+                    delete m._id
+                    delete m.isAdmin
+                    delete m.password
+                    delete m.status
+                    return m
+                })
+            })
+        })
+    })
+})
+// 更新管理员审核状态
+router.post('/verify/role/:id/:status', bodyParser.json(), (req, res) => {
+    db.User.findByIdAndUpdate(req.params.id, { $set: { isAdmin: req.params.status, 'status.role': false } }, (err, data) => {
+        if (err) {
+            res.json({ code: 0, msg: '审核失败' })
+        } else {
+            res.json({ code: 1, msg: '审核成功' })
+        }
+    })
+})
 // 添加管理员
 router.get('/god/add/super/admin', (req, res) => {
     req.query.status = {

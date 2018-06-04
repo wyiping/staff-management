@@ -97,16 +97,17 @@ router.post('/department/status/:id', (req, res) => {
         }
         else {
             res.json({
-                code: 1, user: {
+                code: 1,
+                user: {
                     id: data._id,
-                    department: {
+                    department: data.department.default ? {
                         id: data.department.default._id,
                         name: data.department.default.name
-                    },
+                    } : "",
                     new_department: data.department.new ? {
                         id: data.department.new._id,
                         name: data.department.new.name
-                    } : data.department.default._id,
+                    } : data.department.default ? data.department.default._id : "",
                     status: data.status.department ? true : false
                 }
             });

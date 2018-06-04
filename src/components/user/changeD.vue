@@ -4,7 +4,7 @@
     <!-- Main content -->
     <section class="content">
       <!-- 申请状态为true时显示内容 -->
-      <div class="card is-fullwidth" v-show="user.status">
+      <div class="card is-fullwidth" v-if="user.status">
         <header class="card-header">
           <p class="card-header-title">您的申请正在审核中</p>
         </header>
@@ -17,7 +17,7 @@
         </div>
       </div>
       <!-- 申请状态为false时显示内容 -->
-      <div class="card is-fullwidth" v-show="!user.status">
+      <div class="card is-fullwidth" v-else>
         <header class="card-header">
           <p class="card-header-title">请选择新部门：</p>
         </header>
@@ -26,7 +26,7 @@
             <p class="control">
               <span class="select is-fullwidth">
                 <select v-model="user.new_department">
-                  <option value="">无</option>
+                  <option value="" selected>无</option>
                   <option v-for="(d,i) in departments" :key="i" :value="d._id">{{d.name}}</option>
                 </select>
               </span>
