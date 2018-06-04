@@ -6,9 +6,9 @@ Vue.use(Router)
 export default new Router({
 	routes: [
 		{
-            path: '/',
-            redirect: '/login'
-        },
+			path: '/',
+			redirect: '/login'
+		},
 		{
 			path: '/login',
 			component: resolve => require(['../components/login'], resolve)
@@ -39,6 +39,17 @@ export default new Router({
 				{path:'departmentVerify',component:resolve => require(['../components/admin/departmentVerify.vue'], resolve)},
 				{path:'registerVerify',component:resolve => require(['../components/admin/registerVerify'], resolve)}
 			]
+		},
+		{
+			path:'/404',
+			component:home,
+			children:[
+				{path:'',component:resolve => require(['../components/common/404'], resolve)}
+			]
+		},
+		{
+			path: '*',
+			redirect: '/404'
 		}
 	]
 })
