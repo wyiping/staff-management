@@ -89,7 +89,36 @@ router.post('/edit/:id', bodyParser.json(), (req, res) => {
         }
     })
 })
-
+// 查询部门修改状态
+router.post('/department/status/:id', (req, res) => {
+    db.User.findById(req.params.id).populate("department.default department.new").exec((err, data) => {
+        if (err) {
+            res.json({ code: 0, msg: '系统错误', user: null });
+        }
+        else {
+            res.json({
+                code: 1, user: {
+                    id: data._id,
+                    department: {
+                        id: data.department.default._id,
+                        name: data.department.default.name
+                    },
+                    new_department: data.department.new ? {
+                        id: data.department.new._id,
+                        name: data.department.new.name
+                    } : data.department.default._id,
+                    status: data.status.department ? true : false
+                }
+            });
+        }
+    })
+})
+// 查询部门列表
+router.post('/department/list', (req, res) => {
+    db.Department.find((err, data) => {
+        res.json({ departments: data })
+    })
+})
 // 申请修改部门
 router.post('/department/change', bodyParser.json(), (req, res) => {
     db.User.findByIdAndUpdate(req.body.uid, {

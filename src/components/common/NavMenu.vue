@@ -144,6 +144,9 @@ export default {
       self.adminMenus[0].sub[1].url = "/admin/edit/" + user.id;
       self.menus = self.adminMenus;
     } else {
+      self.userMenus[2].sub[0].url = "/user/edit/" + user.id;
+      self.userMenus[2].sub[1].url = "/user/changeD/" + user.id;
+      self.userMenus[2].sub[2].url = "/user/changeR/" + user.id;
       self.menus = self.userMenus;
     }
   }

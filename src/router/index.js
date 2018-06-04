@@ -23,8 +23,9 @@ export default new Router({
 			children:[
 				{path:'',component: resolve => require(['../components/user/index'], resolve)},
 				{path:'detail',component: resolve => require(['../components/user/detail'], resolve)},
-				{path:'edit',component: resolve => require(['../components/user/edit'], resolve)},
-				{path:'users',component:resolve => require(['../components/user/list'], resolve)}
+				{path:'edit/:id',component: resolve => require(['../components/user/edit'], resolve)},
+				{path:'users',component:resolve => require(['../components/user/list'], resolve)},
+				{path:'changeD/:id',component:resolve => require(['../components/user/changeD'], resolve)}
 			]
 		},
 		{
