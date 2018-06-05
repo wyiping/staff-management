@@ -13,7 +13,7 @@
           <span></span>
         </span>
         <div id="nav-menu" class="nav-right nav-menu" :class="{'is-active': status}">
-          <router-link class="nav-item" to="/"><figure class="image is-24x24 is-right-5"><img class="is-circle" src="/static/images/avatar.jpg"></figure><span>{{name}}</span></router-link>
+          <router-link class="nav-item" to="/user/detail"><figure class="image is-24x24 is-right-5"><img class="is-circle" src="/static/images/avatar.jpg"></figure><span>{{name}}</span></router-link>
           <a class="nav-item" @click="logout()"><span class="icon is-small"><i class="fa fa-power-off"></i></span>注销</a>
         </div>
       </nav>

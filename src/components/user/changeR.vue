@@ -2,9 +2,9 @@
   <x-content>
     <span slot="title">申请管理员</span>
     <!-- Main content -->
-    <section class="content">
+    <section class="content columns is-multiline">
       <!-- 申请状态为true时显示内容 -->
-      <div class="card is-fullwidth" v-show="user.status">
+      <div class="card is-fullwidth column is-6 is-offset-3" v-show="user.status">
         <header class="card-header">
           <p class="card-header-title">您的申请正在审核中</p>
         </header>
@@ -17,7 +17,7 @@
         </div>
       </div>
       <!-- 申请状态为false时显示内容 -->
-      <div class="card is-fullwidth" v-show="!user.status">
+      <div class="card is-fullwidth column is-6 is-offset-3" v-show="!user.status">
         <header class="card-header">
           <p class="card-header-title text-center">您是否准备申请管理员？</p>
         </header>
