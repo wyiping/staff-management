@@ -97,7 +97,7 @@ export default {
     getDetail() {
       const self = this;
       if(self.$route.params.id){
-        self.axios.post("/api/user/detail/" + self.$route.params.id).then(res => {
+        self.axios.post("/api/admin/detail/" + self.$route.params.id).then(res => {
           self.user = res.data.user;
         });
       }

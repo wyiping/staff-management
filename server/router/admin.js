@@ -76,7 +76,12 @@ router.post('/list', bodyParser.json(), (req, res) => {
         })
     })
 })
-
+// 查询个人信息
+router.post('/detail/:id', bodyParser.json(), (req, res) => {
+    db.User.findById(req.params.id).exec((err, data) => {
+        res.json({ user: data })
+    })
+})
 // 查询待审核会员
 router.post('/verify/register', bodyParser.json(), (req, res) => {
     var pageSize = 10;
