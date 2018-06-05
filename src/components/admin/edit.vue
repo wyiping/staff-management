@@ -91,11 +91,11 @@ export default {
   mounted() {
     const self = this;
     self.getDetail();
-    self.getDepartments();
   },
   methods: {
     getDetail() {
       const self = this;
+      self.getDepartments();
       if(self.$route.params.id){
         self.axios.post("/api/admin/detail/" + self.$route.params.id).then(res => {
           self.user = res.data.user;
