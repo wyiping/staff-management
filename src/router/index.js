@@ -38,6 +38,7 @@ export default new Router({
 				{path:'edit/:id',component: resolve => require(['../components/admin/edit'], resolve)},
 				{name:'users',path:'users',component:resolve => require(['../components/admin/list'], resolve)},
 				{path:'departments',component:resolve => require(['../components/admin/department'], resolve)},
+				{path:'addDepartments',component:resolve => require(['../components/admin/addDepartment'], resolve)},
 				{path:'departmentVerify',component:resolve => require(['../components/admin/departmentVerify.vue'], resolve)},
 				{path:'registerVerify',component:resolve => require(['../components/admin/registerVerify'], resolve)},
 				{path:'roleVerify',component:resolve => require(['../components/admin/roleVerify'], resolve)}

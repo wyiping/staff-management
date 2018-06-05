@@ -8,9 +8,7 @@
         <div class="col-md-12">
           <div class="box">
             <div class="box-header">
-              <div class="box-tools pull-right">
-                  <button class="button is-info" title="修改" v-on:click="showModal">添加部门</button>
-              </div>
+
             </div>
             <div class="box-body table-responsive no-padding">
               <div v-if="departments.length == 0">
@@ -49,32 +47,6 @@
       </div>
     </section>
     <!-- /.content -->
-    <!-- modal -->
-    <div class="modal" id="addDepartModal" style="text-align:center;">
-      <div class="modal-background"></div>
-      <div class="modal-content">
-          <div class="modal-content">
-            <header class="modal-card-head">
-              <p class="modal-card-title">添加部门</p>
-              <button class="delete" v-on:click="closeModal" aria-label="close"></button>
-            </header>
-            <div class="modal-card-body">
-              <div class="control is-horizontal">
-                <div class="control-label">
-                  <span class="label">部门名称</span>
-                </div>
-                <div class="control">
-                  <input type="text" class="inpu" id="name" placeholder="名称" v-model="department.name">
-                </div>
-              </div>
-            </div>
-            <footer class="modal-card-foot">
-              <button class="button is-success" v-on:click="addDepartment">添加</button>
-              <button class="button" v-on:click="closeModal">取消</button>
-            </footer>
-          </div><!-- /.modal-content -->
-      </div>
-    </div><!-- /.modal -->
   </x-content>
 </template>
 <script>
@@ -87,9 +59,6 @@ export default {
   data: function() {
     return {
       departments: [],
-      department: {
-        name: ""
-      },
       page: 1,
       pageCount: 1,
       pages: []
@@ -99,24 +68,7 @@ export default {
     this.getDepartments();
   },
   methods: {
-    addDepartment() {
-      const self = this;
-      self.axios
-        .post("/api/admin/department/add", self.department)
-        .then(res => {
-          self.$toasted.show(res.data.msg, {
-            theme: "outline",
-            position: "top-center",
-            duration: 5000
-          });
-          if (res.data.code == 0) {
-            self.department.name = "";
-          } else {
-            document.getElementById("addDepartModal").className = "modal";
-            self.getDepartments();
-          }
-        });
-    },
+
     del(id) {
       var self = this;
       self.axios.post("/api/admin/department/delete/" + id).then(({ data }) => {
@@ -138,13 +90,10 @@ export default {
           self.pageCount = data.pageCount;
           self.pages = data.pages;
         });
-    },
-    showModal() {
-      document.getElementById("addDepartModal").className = "modal is-active";
-    },
-    closeModal() {
-      document.getElementById("addDepartModal").className = "modal";
     }
+  },
+  watch:{
+    "$route":"getDepartments"
   }
 };
 </script>
