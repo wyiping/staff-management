@@ -8,9 +8,9 @@
 
 			<fieldset>
 				<legend><span class="number">1</span>基本信息</legend>
-				<label for="name">姓名:</label>
+				<label for="name">*姓名:</label>
 				<input type="text" id="name" name="name" v-model="user.name" required>
-				<label for="password">密码:</label>
+				<label for="password">*密码:</label>
 				<input type="password" id="password" name="password" v-model="user.password" required><br>
 				<label for="department">部门:</label>
 				<select id="department" name="department" v-model="user.department.default">
@@ -25,10 +25,10 @@
 				<input type="number" name="age" id="age" v-model="user.detail.age">
 				<label for="address">地址:</label>
 				<input type="text" id="address" name="address" v-model="user.detail.address"><br>
-				<label for="phone">手机:</label>
-				<input type="text" id="phone" name="phone" v-model="user.phone" required>
+				<label for="phone">*手机:</label>
+				<input type="text" id="phone" name="phone" v-model="user.phone" required pattern="^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$" ref="phone" @change="phoneValid">
 				<label for="mail">Email:</label>
-				<input type="email" id="mail" name="email" v-model="user.detail.email" required><br>
+				<input type="email" id="mail" name="email" v-model="user.detail.email"><br>
 				<label>性别:</label>
 				<input type="radio" id="male" value="男" name="sex" v-model="user.detail.sex"><label for="male" class="light">男</label>
 				<input type="radio" id="female" value="女" name="sex" v-model="user.detail.sex"><label for="female" class="light">女</label><br>
@@ -44,26 +44,27 @@ export default {
   name: "register",
   data: function() {
     return {
-       user:{
-          workId: '',
-          name: '',
-          department: {
-            default:''
-          },
-          phone: '',
-          detail:{
-              age: '',
-              address: '',
-              email: '',
-              introduce: '',
-              sex: ''
-          }
-       },
-       departments:[]
+      user: {
+        workId: "",
+        name: "",
+        department: {
+          default: ""
+        },
+        phone: "",
+        detail: {
+          age: "",
+          address: "",
+          email: "",
+          introduce: "",
+          sex: ""
+        }
+      },
+      departments: []
     };
   },
-  mounted(){
-    this.getDepartments()
+  mounted() {
+    this.getDepartments();
+    this.phoneValid();
   },
   methods: {
     getDepartments() {
@@ -72,23 +73,34 @@ export default {
       });
     },
     register() {
-      var self = this
-      self.axios.post("/api/register", self.user).then(function({data}) {
+      var self = this;
+      self.axios.post("/api/register", self.user).then(function({ data }) {
         self.$toasted.show(data.msg, {
           theme: "outline",
           position: "top-center",
           duration: 5000
         });
-        if(data.code == 1){
-          self.$router.push('/login');
+        if (data.code == 1) {
+          self.$router.push("/login");
         }
       });
+    },
+    phoneValid() {
+      var phone = this.$refs.phone;
+      if (phone.value) {
+        phone.setCustomValidity(""); //现将有输入时的提示设置为空
+      } else if (phone.validity.valueMissing) {
+        phone.setCustomValidity("手机号不能为空");
+      }
+      if (phone.validity.patternMismatch) {
+        phone.setCustomValidity("请输入正确的手机号码");
+      }
     }
   }
 };
 </script>
 <style>
-html{
+html {
   overflow-y: scroll;
 }
 .body {
@@ -228,5 +240,8 @@ html{
   .register {
     max-width: 480px;
   }
+}
+.error {
+  border: 1px solid red !important;
 }
 </style>
