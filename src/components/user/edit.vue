@@ -44,10 +44,10 @@
                     </tr>
                   </tbody>
                 </table>
-                <button v-on:click="edit" class="button is-success">修改</button>
-                <router-link to="/user/detail">
-                  <button class="button is-success">返回</button>
-                </router-link>
+                <div class="content has-text-centered">
+                  <button v-on:click="edit" class="button is-success">修改</button>
+                  <button class="button is-success" v-on:click="$router.go(-1)">返回</button>
+                </div>
               </div>
             </div>
             <!-- /.box-body -->

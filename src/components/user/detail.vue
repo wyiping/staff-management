@@ -6,7 +6,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="box">
-            <div class="box-header with-border text-center">
+            <div class="box-header with-border has-text-centered">
               <h3 class="box-title">我的简历</h3>
             </div>
             <div class="box-body no-padding">

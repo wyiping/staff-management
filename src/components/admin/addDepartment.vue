@@ -17,7 +17,7 @@
         </div>
         <footer class="card-footer">
           <a class="card-footer-item" v-on:click="addDepartment">添加</a>
-          <a class="card-footer-item">取消</a>
+          <a class="card-footer-item" v-on:click="$router.go(-1)">取消</a>
         </footer>
       </div>
     </section>
