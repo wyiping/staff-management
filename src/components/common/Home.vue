@@ -39,9 +39,18 @@ export default {
 html,
 body {
   background-color: #fff;
-  font-family: Helvetica Neue, Helvetica, "Hiragino Sans GB", "Microsoft YaHei",
-    "微软雅黑", Arial, sans-serif;
   overflow: hidden;
+  /*  字体  */
+  font-family: -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+  
+  /*  字号 */
+  font-size: 16px;
+  
+  /*  字体颜色  */
+  color: #333;
+  
+  /* 行距 */
+  line-height: 1.75;
 }
 #app-container {
   position: absolute;
@@ -78,7 +87,7 @@ a .icon {
     z-index: 1030;
 }
 #nav-section .nav{
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 5px 1px 15px rgba(0, 151, 129,1);
 }
 .page-container {
   position: absolute;
@@ -101,5 +110,11 @@ a .icon {
 .inner-header,
 .inner-content {
   padding: 20px;
+}
+.inner-header{
+  box-shadow: 4px 0px 3px rgba(0, 0, 1,1);
+}
+.bg-light{
+  background-color:#f1f1f1;
 }
 </style>

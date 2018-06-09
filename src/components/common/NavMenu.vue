@@ -90,6 +90,7 @@ export default {
           title: "个人",
           icon: "address-book",
           sub: [
+            { title: "首页", icon: "home", url: "/admin/" },
             { title: "我的资料", url: "/user/detail", icon: "user" },
             { title: "修改资料", url: "/admin/edit", icon: "edit" }
           ]
@@ -141,7 +142,7 @@ export default {
     let user = JSON.parse(sessionStorage.getItem("user"));
     self.user = user;
     if (user.isAdmin) {
-      self.adminMenus[0].sub[1].url = "/admin/edit/" + user.id;
+      self.adminMenus[0].sub[2].url = "/admin/edit/" + user.id;
       self.menus = self.adminMenus;
     } else {
       self.userMenus[2].sub[0].url = "/user/edit/" + user.id;

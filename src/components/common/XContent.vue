@@ -15,16 +15,16 @@
 </template>
 <script>
 export default {
-  data(){
+  data() {
     return {
-      name:"x-content"
-    }
+      name: "x-content"
+    };
   },
   props: {
     classname: {
       type: String,
-      default: ''
+      default: "bg-light"
     }
   }
-}
+};
 </script>
