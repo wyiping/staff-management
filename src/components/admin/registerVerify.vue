@@ -111,9 +111,8 @@ export default {
         });
     }
   },
-  mounted() {
-    const self = this;
-    self.getVerigies();
+  beforeMount: function() {
+    this.getVerigies();
   }
 };
 </script>

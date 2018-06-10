@@ -77,12 +77,14 @@ export default {
   methods: {
     getVerigies() {
       const self = this;
-      self.axios.post("/api/admin/verify/department",{page:self.page}).then(function({ data }) {
-        self.users = data.users;
-        self.page = data.page;
-        self.pageCount = data.pageCount;
-        self.pages = data.pages;
-      });
+      self.axios
+        .post("/api/admin/verify/department", { page: self.page })
+        .then(function({ data }) {
+          self.users = data.users;
+          self.page = data.page;
+          self.pageCount = data.pageCount;
+          self.pages = data.pages;
+        });
     },
     verify(id, status, newid) {
       const self = this;
@@ -101,9 +103,8 @@ export default {
         });
     }
   },
-  mounted() {
-    const self = this;
-    self.getVerigies();
+  beforeMount: function() {
+    this.getVerigies();
   }
 };
 </script>

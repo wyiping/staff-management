@@ -68,7 +68,7 @@ export default {
         });
     }
   },
-  mounted() {
+  beforeMount: function() {
     this.getStatus();
   }
 };

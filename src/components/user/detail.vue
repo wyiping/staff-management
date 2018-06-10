@@ -92,11 +92,11 @@ export default {
       });
     }
   },
-  mounted() {
+  beforeMount: function() {
     this.getDetail();
   },
-  watch: {
-    $route: "getDetail"
+  activated: function() {
+    this.getDetail();
   }
 };
 </script>

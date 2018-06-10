@@ -85,14 +85,6 @@ export default {
       }
     };
   },
-  mounted() {
-    const self = this;
-    self.axios
-      .post("/api/user/detail/" + self.$route.params.id)
-      .then(res => {
-        self.user = res.data.user;
-      });
-  },
   methods: {
     edit: function() {
       const self = this;
@@ -106,7 +98,16 @@ export default {
           });
           self.$router.push("/user/detail");
         });
+    },
+    getDetail() {
+      const self = this;
+      self.axios.post("/api/user/detail/" + self.$route.params.id).then(res => {
+        self.user = res.data.user;
+      });
     }
+  },
+  beforeMount: function() {
+    this.getDetail();
   }
 };
 </script>

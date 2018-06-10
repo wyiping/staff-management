@@ -97,7 +97,7 @@ export default {
         });
     }
   },
-  mounted() {
+  beforeMount: function() {
     this.getVerigies();
   }
 };

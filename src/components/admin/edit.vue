@@ -90,10 +90,6 @@ export default {
       departments: []
     };
   },
-  mounted() {
-    const self = this;
-    self.getDetail();
-  },
   methods: {
     getDetail() {
       const self = this;
@@ -123,8 +119,11 @@ export default {
         });
     }
   },
-  watch: {
-    $route: "getDetail"
+  beforeMount: function() {
+    this.getDetail();
+  },
+  activated: function() {
+    this.getDetail();
   }
 };
 </script>

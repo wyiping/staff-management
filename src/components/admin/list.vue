@@ -105,16 +105,13 @@ export default {
       pages: []
     };
   },
-  mounted() {
-    this.getSearch();
-  },
   methods: {
     getSearch() {
       const self = this;
       if (self.$route.params.department) {
         self.department.default = self.$route.params.department;
-      }else{
-        self.department.default = ""
+      } else {
+        self.department.default = "";
       }
       self.axios
         .post("/api/admin/list", {
@@ -149,8 +146,11 @@ export default {
       });
     }
   },
-  watch: {
-    $route: "getSearch"
+  beforeMount: function() {
+    this.getSearch();
+  },
+  activated: function() {
+    this.getSearch();
   }
 };
 </script>

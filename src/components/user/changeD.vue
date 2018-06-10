@@ -50,7 +50,7 @@ export default {
   },
   data() {
     return {
-      departments:[],
+      departments: [],
       user: {
         id: "",
         department: "",
@@ -73,8 +73,8 @@ export default {
             position: "top-center",
             duration: 5000
           });
-          if(data.code){
-            self.getStatus()
+          if (data.code) {
+            self.getStatus();
           }
         });
     },
@@ -82,18 +82,18 @@ export default {
       this.axios
         .post("/api/user/department/status/" + this.$route.params.id)
         .then(({ data }) => {
-          this.user = data.user
+          this.user = data.user;
         });
     },
-    getDepartments(){
+    getDepartments() {
       this.axios.post("/api/user/department/list").then(({ data }) => {
         this.departments = data.departments;
       });
     }
   },
-  mounted() {
-    this.getDepartments()
-    this.getStatus()
+  beforeMount: function() {
+    this.getDepartments();
+    this.getStatus();
   }
 };
 </script>

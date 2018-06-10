@@ -64,9 +64,6 @@ export default {
       pages: []
     };
   },
-  mounted() {
-    this.getDepartments();
-  },
   methods: {
 
     del(id) {
@@ -92,8 +89,11 @@ export default {
         });
     }
   },
-  watch:{
-    "$route":"getDepartments"
+  beforeMount: function() {
+    this.getDepartments();
+  },
+  activated: function() {
+    this.getDepartments();
   }
 };
 </script>

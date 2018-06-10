@@ -58,9 +58,9 @@
             <!-- box-footer -->
             <div class="box-footer clearfix" v-if="pageCount>1">
               <ul class="pagination pagination-sm no-margin pull-right">
-                <li v-bind:class="{ 'disabled': page == 1}"><a href="javascript:void(0)" v-on:click="page--,getStaff()">«</a></li>
-                <li v-for="p in pages" v-bind:class="{ 'active': page == p}"><a href="javascript:void(0)" v-on:click="page=p,getStaff()">{{p}}</a></li>
-                <li v-bind:class="{ 'disabled': page == pageCount}"><a href="javascript:void(0)" v-on:click="page++,getStaff()">»</a></li>
+                <li v-bind:class="{ 'disabled': page == 1}"><a href="javascript:void(0)" v-on:click="page--,getSearch()">«</a></li>
+                <li v-for="p in pages" v-bind:class="{ 'active': page == p}"><a href="javascript:void(0)" v-on:click="page=p,getSearch()">{{p}}</a></li>
+                <li v-bind:class="{ 'disabled': page == pageCount}"><a href="javascript:void(0)" v-on:click="page++,getSearch()">»</a></li>
               </ul>
             </div>
             <!-- /.box-footer -->
@@ -90,9 +90,6 @@ export default {
       pages: []
     };
   },
-  mounted() {
-    this.getStaff();
-  },
   methods: {
     getSearch() {
       const self = this;
@@ -100,24 +97,25 @@ export default {
         .post("/api/user/list", {
           workId: self.workId,
           name: self.name,
-          phone: self.phone
+          phone: self.phone,
+          page: self.page
         })
         .then(function({ data }) {
           self.users = data.users;
+          self.page = data.page;
+          self.pageCount = data.pageCount;
+          self.pages = data.pages;
         })
         .catch(function(error) {
           self.error = "ERROR!" + error;
         });
-    },
-    getStaff() {
-      const self = this;
-      self.axios.post("/api/user/list", { page: self.page }).then(({data}) => {
-        self.users = data.users;
-        self.page = data.page;
-        self.pageCount = data.pageCount;
-        self.pages = data.pages;
-      });
     }
+  },
+  beforeMount: function() {
+    this.getSearch();
+  },
+  activated: function() {
+    this.getSearch();
   }
 };
 </script>
