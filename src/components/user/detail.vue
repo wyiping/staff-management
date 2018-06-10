@@ -83,12 +83,20 @@ export default {
       }
     };
   },
+  methods: {
+    getDetail() {
+      const self = this;
+      let user = JSON.parse(sessionStorage.getItem("user"));
+      self.axios.post("/api/user/detail/" + user.id).then(res => {
+        self.user = res.data.user;
+      });
+    }
+  },
   mounted() {
-    const self = this;
-    let user = JSON.parse(sessionStorage.getItem("user"));
-    self.axios.post("/api/user/detail/" + user.id).then(res => {
-      self.user = res.data.user;
-    });
+    this.getDetail();
+  },
+  watch: {
+    $route: "getDetail"
   }
 };
 </script>
